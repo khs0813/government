@@ -1,0 +1,69 @@
+{
+  "id": "youth-rent-support-rule-2026-07-04",
+  "benefitId": "youth-rent-support",
+  "version": "official-check-2026-07-04",
+  "isVerified": false,
+  "requiresOfficialCheck": true,
+  "source": {
+    "name": "정부24/복지로/지자체 청년월세 지원 공고(공식 상세 기준 확인 필요)",
+    "url": "https://www.gov.kr/",
+    "checkedAt": "2026-07-04"
+  },
+  "inputs": [
+    "age",
+    "housingType",
+    "isHomeOwner",
+    "monthlyIncome",
+    "region"
+  ],
+  "conditions": [
+    {
+      "field": "age",
+      "operator": "between",
+      "value": [
+        19,
+        34
+      ],
+      "weight": 25,
+      "successMessage": "청년월세 한시 특별지원의 기본 청년 연령대인 19~34세 범위에 있습니다.",
+      "failMessage": "나이 조건을 충족하지 않을 수 있습니다.",
+      "missingMessage": "나이를 입력하세요."
+    },
+    {
+      "field": "housingType",
+      "operator": "equals",
+      "value": "monthly_rent",
+      "weight": 25,
+      "successMessage": "월세 거주자로 입력되었습니다.",
+      "failMessage": "월세 거주자가 아닌 경우 대상이 아닐 수 있습니다.",
+      "missingMessage": "주거 형태를 선택하세요."
+    },
+    {
+      "field": "isHomeOwner",
+      "operator": "falsy",
+      "weight": 20,
+      "successMessage": "무주택자로 입력되었습니다.",
+      "failMessage": "주택 보유자는 대상에서 제외될 수 있습니다.",
+      "missingMessage": "주택 보유 여부를 선택하세요."
+    },
+    {
+      "field": "monthlyIncome",
+      "operator": "lte",
+      "value": 1531548,
+      "weight": 20,
+      "successMessage": "월소득 입력값이 2026년 1인가구 기준 중위소득 60% 참고 한도 안에 있습니다. 실제 심사는 청년가구와 원가구 소득·재산을 함께 봅니다.",
+      "failMessage": "월소득이 청년월세 지원 소득 기준을 초과할 가능성이 있습니다.",
+      "missingMessage": "월소득을 입력하세요."
+    },
+    {
+      "field": "region",
+      "operator": "exists",
+      "weight": 10,
+      "successMessage": "거주지역이 입력되었습니다.",
+      "failMessage": "거주지역 입력값을 확인하세요.",
+      "missingMessage": "지역별 사업 확인을 위해 거주지역이 필요합니다."
+    }
+  ],
+  "eligibleThreshold": 75,
+  "maybeThreshold": 45
+}

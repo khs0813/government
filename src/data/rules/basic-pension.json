@@ -1,0 +1,56 @@
+{
+  "id": "basic-pension-rule-2026-07-04",
+  "benefitId": "basic-pension",
+  "version": "official-check-2026-07-04",
+  "isVerified": true,
+  "requiresOfficialCheck": true,
+  "source": {
+    "name": "보건복지부 기초연금 대상자 안내",
+    "url": "https://basicpension.mohw.go.kr/menu.es?mid=a10102010000",
+    "checkedAt": "2026-07-04"
+  },
+  "inputs": [
+    "age",
+    "monthlyIncome",
+    "propertyAmount",
+    "maritalStatus"
+  ],
+  "conditions": [
+    {
+      "field": "age",
+      "operator": "gte",
+      "value": 65,
+      "weight": 35,
+      "successMessage": "만 65세 이상 기초연금 연령 요건 범위에 있습니다.",
+      "failMessage": "만 65세 미만이면 기초연금 연령 요건을 충족하지 않을 수 있습니다.",
+      "missingMessage": "나이를 입력하세요."
+    },
+    {
+      "field": "monthlyIncome",
+      "operator": "lte",
+      "value": 3952000,
+      "weight": 25,
+      "successMessage": "월소득 입력값이 2026년 부부가구 선정기준액 395.2만원 이하입니다. 단독가구는 247만원 이하인지 별도 확인해야 합니다.",
+      "failMessage": "월소득 또는 소득인정액이 2026년 기초연금 선정기준액을 초과할 가능성이 있습니다.",
+      "missingMessage": "월소득 또는 소득인정액 참고값을 입력하세요."
+    },
+    {
+      "field": "propertyAmount",
+      "operator": "exists",
+      "weight": 25,
+      "successMessage": "재산 참고값이 입력되었습니다. 실제 기초연금 심사는 재산의 월 소득환산액을 포함한 소득인정액으로 판단합니다.",
+      "failMessage": "재산 입력값을 확인하세요.",
+      "missingMessage": "재산 구간을 입력하면 결과가 더 정확해집니다."
+    },
+    {
+      "field": "maritalStatus",
+      "operator": "exists",
+      "weight": 15,
+      "successMessage": "혼인 여부가 입력되었습니다.",
+      "failMessage": "혼인 여부 입력값을 확인하세요.",
+      "missingMessage": "단독/부부가구 구분을 위해 혼인 여부가 필요합니다."
+    }
+  ],
+  "eligibleThreshold": 75,
+  "maybeThreshold": 45
+}

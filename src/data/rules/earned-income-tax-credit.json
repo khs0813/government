@@ -1,0 +1,61 @@
+{
+  "id": "earned-income-tax-credit-rule-2026-07-04",
+  "benefitId": "earned-income-tax-credit",
+  "version": "official-check-2026-07-04",
+  "isVerified": true,
+  "requiresOfficialCheck": true,
+  "source": {
+    "name": "국세청 근로·자녀장려금 신청자격",
+    "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7783&mi=2452",
+    "checkedAt": "2026-07-04"
+  },
+  "inputs": [
+    "employmentStatus",
+    "annualIncome",
+    "propertyAmount",
+    "householdSize"
+  ],
+  "conditions": [
+    {
+      "field": "employmentStatus",
+      "operator": "in",
+      "value": [
+        "employed",
+        "self_employed"
+      ],
+      "weight": 30,
+      "successMessage": "근로 또는 사업 소득이 있는 것으로 입력되었습니다.",
+      "failMessage": "근로·사업소득 조건 확인이 필요합니다.",
+      "missingMessage": "근로상태를 입력하면 근로장려금 가능성을 더 정확히 판단할 수 있습니다."
+    },
+    {
+      "field": "annualIncome",
+      "operator": "lte",
+      "value": 44000000,
+      "weight": 25,
+      "successMessage": "연소득이 근로장려금 총소득 기준의 최대 가구유형 한도 안에 있습니다. 실제 한도는 단독 2,200만원, 홑벌이 3,200만원, 맞벌이 4,400만원 기준으로 확인해야 합니다.",
+      "failMessage": "연소득이 근로장려금 총소득 기준의 최대 한도인 4,400만원을 초과할 가능성이 있습니다.",
+      "missingMessage": "연소득 입력이 필요합니다."
+    },
+    {
+      "field": "propertyAmount",
+      "operator": "lte",
+      "value": 240000000,
+      "weight": 25,
+      "successMessage": "가구원 합산 재산 입력값이 근로장려금 재산 기준인 2.4억원 미만 범위에 있습니다.",
+      "failMessage": "가구원 합산 재산이 2.4억원 이상이면 근로장려금 신청 대상에서 제외될 수 있습니다.",
+      "missingMessage": "재산 구간을 입력하면 추가 확인 여부를 줄일 수 있습니다."
+    },
+    {
+      "field": "householdSize",
+      "operator": "gte",
+      "value": 1,
+      "weight": 20,
+      "successMessage": "가구원 수가 입력되었습니다.",
+      "failMessage": "가구원 수 입력값을 확인하세요.",
+      "missingMessage": "가구원 수 입력이 필요합니다."
+    }
+  ],
+  "eligibleThreshold": 75,
+  "maybeThreshold": 45
+}

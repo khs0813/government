@@ -1,0 +1,54 @@
+{
+  "id": "youth-savings-support-rule-2026-07-04",
+  "benefitId": "youth-savings-support",
+  "version": "official-check-2026-07-04",
+  "isVerified": false,
+  "requiresOfficialCheck": true,
+  "source": {
+    "name": "금융위원회/서민금융진흥원 청년도약계좌 안내(공식 상세 기준 확인 필요)",
+    "url": "https://ylaccount.kinfa.or.kr/main",
+    "checkedAt": "2026-07-04"
+  },
+  "inputs": [
+    "age",
+    "employmentStatus",
+    "annualIncome"
+  ],
+  "conditions": [
+    {
+      "field": "age",
+      "operator": "between",
+      "value": [
+        19,
+        34
+      ],
+      "weight": 35,
+      "successMessage": "청년도약계좌 기본 가입 연령대인 19~34세 범위에 있습니다. 병역이행기간은 공식 기준에 따라 별도 인정될 수 있습니다.",
+      "failMessage": "나이 조건을 충족하지 않을 수 있습니다.",
+      "missingMessage": "나이를 입력하세요."
+    },
+    {
+      "field": "employmentStatus",
+      "operator": "in",
+      "value": [
+        "employed",
+        "self_employed"
+      ],
+      "weight": 30,
+      "successMessage": "소득활동이 있는 것으로 입력되었습니다.",
+      "failMessage": "소득활동 요건 확인이 필요합니다.",
+      "missingMessage": "근로상태를 선택하세요."
+    },
+    {
+      "field": "annualIncome",
+      "operator": "lte",
+      "value": 75000000,
+      "weight": 35,
+      "successMessage": "연소득이 청년도약계좌 개인소득 기본 한도인 7,500만원 이하 범위에 있습니다. 정부기여금은 더 낮은 소득 구간에서 달라질 수 있습니다.",
+      "failMessage": "연소득이 청년도약계좌 개인소득 기본 한도인 7,500만원을 초과할 가능성이 있습니다.",
+      "missingMessage": "연소득을 입력하세요."
+    }
+  ],
+  "eligibleThreshold": 75,
+  "maybeThreshold": 45
+}
