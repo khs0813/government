@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, type ReactNode, useMemo, useState } from "react";
+import { type FormEvent, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { benefitRules } from "@/data/rules";
 import { evaluateBenefits } from "@/lib/eligibility/engine";
 import { cx } from "@/lib/utils/format";
@@ -304,6 +304,20 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
   const rules = useMemo(() => (benefitId ? benefitRules.filter((rule) => rule.benefitId === benefitId) : benefitRules), [benefitId]);
   const visibleFields = useMemo(() => fieldsForRules(rules), [rules]);
   const [results, setResults] = useState<EligibilityResult[]>([]);
+  const [shouldScrollToResults, setShouldScrollToResults] = useState(false);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!shouldScrollToResults || !results.length) return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      resultsRef.current?.focus({ preventScroll: true });
+      setShouldScrollToResults(false);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [results, shouldScrollToResults]);
 
   function shouldShow(field: keyof UserInput) {
     return visibleFields.has(field);
@@ -335,6 +349,7 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
     };
 
     setResults(evaluateBenefits(input, rules));
+    setShouldScrollToResults(true);
   }
 
   const basics = renderGroup(groupFields.basics);
@@ -383,7 +398,7 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
       </Card>
 
       {results.length ? (
-        <div className="space-y-4">
+        <div ref={resultsRef} tabIndex={-1} className="scroll-mt-6 space-y-4 outline-none">
           <div>
             <p className="text-sm font-bold text-brand-600">계산 결과</p>
             <h2 className="mt-1 text-3xl font-extrabold text-slate-950">지원금 후보</h2>
