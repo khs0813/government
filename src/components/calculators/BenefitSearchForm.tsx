@@ -12,6 +12,17 @@ import { BenefitResultCard } from "./BenefitResultCard";
 import { DisclaimerBox } from "./DisclaimerBox";
 
 const regions = ["서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"];
+const propertyAmounts = [50000000, 100000000, 240000000, 500000000, 800000000] as const;
+const maritalStatuses = ["single", "married", "unknown"] as const;
+const employmentStatuses = ["employed", "self_employed", "unemployed", "student", "retired", "none"] as const;
+const housingTypes = ["own", "jeonse", "monthly_rent", "family", "unknown"] as const;
+
+const limits = {
+  age: { min: 0, max: 120 },
+  householdSize: { min: 1, max: 20 },
+  childrenCount: { min: 0, max: 20 },
+  moneyManwon: { min: 0, max: 1000000 }
+} as const;
 
 const fieldLabels: Record<keyof UserInput, string> = {
   age: "나이",
@@ -47,20 +58,41 @@ const groupFields = {
   ] as Array<keyof UserInput>
 };
 
-function numberOrUndefined(value: FormDataEntryValue | null) {
+function numberInRangeOrUndefined(value: FormDataEntryValue | null, min: number, max: number) {
   if (value === null || value === "") return undefined;
   const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : undefined;
+  if (!Number.isFinite(parsed) || !Number.isInteger(parsed)) return undefined;
+  if (parsed < min || parsed > max) return undefined;
+  return parsed;
 }
 
 function manwonToWon(value: FormDataEntryValue | null) {
-  const parsed = numberOrUndefined(value);
+  const parsed = numberInRangeOrUndefined(value, limits.moneyManwon.min, limits.moneyManwon.max);
   return typeof parsed === "number" ? parsed * 10000 : undefined;
 }
 
 function booleanOrUndefined(value: FormDataEntryValue | null) {
   if (value === null || value === "") return undefined;
-  return value === "true";
+  if (value === "true") return true;
+  if (value === "false") return false;
+  return undefined;
+}
+
+function stringEnumOrDefault<T extends string>(value: FormDataEntryValue | null, allowed: readonly T[], defaultValue: T) {
+  if (typeof value !== "string" || value === "") return defaultValue;
+  return allowed.includes(value as T) ? value as T : defaultValue;
+}
+
+function stringEnumOrUndefined<T extends string>(value: FormDataEntryValue | null, allowed: readonly T[]) {
+  if (typeof value !== "string" || value === "") return undefined;
+  return allowed.includes(value as T) ? value as T : undefined;
+}
+
+function numberEnumOrUndefined<T extends number>(value: FormDataEntryValue | null, allowed: readonly T[]) {
+  if (value === null || value === "") return undefined;
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return undefined;
+  return allowed.includes(parsed as T) ? parsed as T : undefined;
 }
 
 function fieldsForRules(rules: BenefitRule[]) {
@@ -102,7 +134,7 @@ const inputClass = "h-12 w-full rounded-xl border border-slate-300 bg-white px-4
 function MoneyInput({ name, placeholder }: { name: "monthlyIncome" | "annualIncome"; placeholder: string }) {
   return (
     <div className="relative">
-      <input name={name} type="number" min="0" inputMode="numeric" className={cx(inputClass, "pr-14")} placeholder={placeholder} />
+      <input name={name} type="number" min={limits.moneyManwon.min} max={limits.moneyManwon.max} step="1" inputMode="numeric" className={cx(inputClass, "pr-14")} placeholder={placeholder} />
       <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm font-bold text-slate-500">만원</span>
     </div>
   );
@@ -136,7 +168,7 @@ function RenderField({ field }: { field: keyof UserInput }) {
     case "age":
       return (
         <FieldFrame label="나이" hint="만 나이 기준으로 입력하세요.">
-          <input name="age" type="number" min="0" inputMode="numeric" className={inputClass} placeholder="예: 29" />
+          <input name="age" type="number" min={limits.age.min} max={limits.age.max} step="1" inputMode="numeric" className={inputClass} placeholder="예: 29" />
         </FieldFrame>
       );
     case "region":
@@ -151,7 +183,7 @@ function RenderField({ field }: { field: keyof UserInput }) {
     case "householdSize":
       return (
         <FieldFrame label="가구원 수" hint="본인을 포함한 기준입니다.">
-          <input name="householdSize" type="number" min="1" inputMode="numeric" className={inputClass} placeholder="예: 2" />
+          <input name="householdSize" type="number" min={limits.householdSize.min} max={limits.householdSize.max} step="1" inputMode="numeric" className={inputClass} placeholder="예: 2" />
         </FieldFrame>
       );
     case "monthlyIncome":
@@ -188,7 +220,7 @@ function RenderField({ field }: { field: keyof UserInput }) {
     case "childrenCount":
       return (
         <FieldFrame label="자녀 수">
-          <input name="childrenCount" type="number" min="0" inputMode="numeric" className={inputClass} placeholder="예: 1" />
+          <input name="childrenCount" type="number" min={limits.childrenCount.min} max={limits.childrenCount.max} step="1" inputMode="numeric" className={inputClass} placeholder="예: 1" />
         </FieldFrame>
       );
     case "employmentStatus":
@@ -285,17 +317,17 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const input: UserInput = {
-      age: numberOrUndefined(formData.get("age")),
-      region: String(formData.get("region") || ""),
-      householdSize: numberOrUndefined(formData.get("householdSize")),
+      age: numberInRangeOrUndefined(formData.get("age"), limits.age.min, limits.age.max),
+      region: stringEnumOrUndefined(formData.get("region"), regions),
+      householdSize: numberInRangeOrUndefined(formData.get("householdSize"), limits.householdSize.min, limits.householdSize.max),
       annualIncome: manwonToWon(formData.get("annualIncome")),
       monthlyIncome: manwonToWon(formData.get("monthlyIncome")),
-      propertyAmount: numberOrUndefined(formData.get("propertyAmount")),
-      maritalStatus: (formData.get("maritalStatus") as UserInput["maritalStatus"]) || "unknown",
-      childrenCount: numberOrUndefined(formData.get("childrenCount")),
-      employmentStatus: (formData.get("employmentStatus") as UserInput["employmentStatus"]) || "none",
+      propertyAmount: numberEnumOrUndefined(formData.get("propertyAmount"), propertyAmounts),
+      maritalStatus: stringEnumOrDefault(formData.get("maritalStatus"), maritalStatuses, "unknown"),
+      childrenCount: numberInRangeOrUndefined(formData.get("childrenCount"), limits.childrenCount.min, limits.childrenCount.max),
+      employmentStatus: stringEnumOrDefault(formData.get("employmentStatus"), employmentStatuses, "none"),
       hasEmploymentInsurance: booleanOrUndefined(formData.get("hasEmploymentInsurance")),
-      housingType: (formData.get("housingType") as UserInput["housingType"]) || "unknown",
+      housingType: stringEnumOrDefault(formData.get("housingType"), housingTypes, "unknown"),
       isHomeOwner: booleanOrUndefined(formData.get("isHomeOwner")),
       isPregnantOrPostpartum: booleanOrUndefined(formData.get("isPregnantOrPostpartum")),
       isOnParentalLeave: booleanOrUndefined(formData.get("isOnParentalLeave")),
