@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-slate-950 text-slate-300">
+    <footer data-nosnippet className="border-t border-slate-200 bg-slate-950 text-slate-300">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-4 md:px-6">
         <div className="md:col-span-2">
           <p className="text-lg font-extrabold text-white">{siteConfig.name}</p>
