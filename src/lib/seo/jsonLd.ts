@@ -37,6 +37,40 @@ export function faqJsonLd(faq: Array<{ question: string; answer: string }>) {
   };
 }
 
+export function articleJsonLd({
+  headline,
+  description,
+  path,
+  dateModified,
+  datePublished
+}: {
+  headline: string;
+  description: string;
+  path: string;
+  dateModified: string;
+  datePublished?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    url: absoluteUrl(path),
+    datePublished: datePublished || dateModified,
+    dateModified,
+    author: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url
+    }
+  };
+}
+
 export function webApplicationJsonLd({ name, description, path }: { name: string; description: string; path: string }) {
   return {
     "@context": "https://schema.org",

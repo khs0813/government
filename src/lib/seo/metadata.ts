@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
+function createOgImageUrl(title: string, path: string) {
+  const params = new URLSearchParams({ title, page: path });
+  return absoluteUrl(`${siteConfig.ogImage}?${params.toString()}`);
+}
+
 export function createMetadata({
   title,
   description,
@@ -11,7 +16,7 @@ export function createMetadata({
   path?: string;
 }): Metadata {
   const url = absoluteUrl(path);
-  const imageUrl = absoluteUrl(siteConfig.ogImage);
+  const imageUrl = createOgImageUrl(title, path);
 
   return {
     title,

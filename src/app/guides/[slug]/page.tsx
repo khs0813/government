@@ -2,7 +2,9 @@ import { notFound } from "next/navigation";
 import { getGuideBySlug, guides } from "@/data/guides";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createMetadata } from "@/lib/seo/metadata";
-import { breadcrumbJsonLd, faqJsonLd } from "@/lib/seo/jsonLd";
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo/jsonLd";
+
+const guideUpdatedAt = "2026-07-04";
 
 export function generateStaticParams() {
   return guides.map((guide) => ({ slug: guide.slug }));
@@ -42,6 +44,12 @@ export default async function GuideDetailPage({ params }: PageProps) {
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
       <JsonLd data={breadcrumbJsonLd([{ name: "홈", path: "/" }, { name: "가이드", path: "/guides/" }, { name: guide.title, path: `/guides/${guide.slug}/` }])} />
       <JsonLd data={faqJsonLd(guide.faq)} />
+      <JsonLd data={articleJsonLd({
+        headline: guide.title,
+        description: guide.description,
+        path: `/guides/${guide.slug}/`,
+        dateModified: guideUpdatedAt
+      })} />
 
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">{guide.category}</p>
