@@ -4,17 +4,24 @@ import { createMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createMetadata({
   title: "정부지원금 가이드 - 신청서류·소득기준·찾는 법",
-  description: "정부지원금 신청 전 확인해야 할 공식 사이트, 신청서류, 소득 기준을 정리했습니다.",
+  description: "정부지원금 신청 전 확인할 공식 사이트, 신청서류, 소득 기준, 절차를 정리했습니다.",
   path: "/guides/"
 });
 
 export default function GuidesPage() {
+  const intro = [
+    "정부지원금 가이드는 계산 결과를 본 뒤 신청 전에 확인해야 할 배경 정보를 모아둔 공간입니다. 어떤 공식 사이트에서 제도를 찾아야 하는지, 신청서류를 어떻게 준비해야 하는지, 소득인정액과 기준 중위소득처럼 자주 나오는 용어를 어떻게 이해해야 하는지 단계별로 정리했습니다.",
+    "지원금은 같은 이름으로 검색해도 중앙정부 사업, 지자체 사업, 고용보험 급여, 세제 지원으로 나뉠 수 있습니다. 그래서 신청 전에 담당 기관, 접수 기간, 제출 서류, 중복지원 제한, 최신 공고 여부를 함께 확인해야 합니다. 각 가이드는 계산기 상세 페이지와 함께 읽을 수 있도록 공식 출처 중심으로 구성했습니다."
+  ];
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">가이드</p>
         <h1 className="mt-3 text-4xl font-black text-slate-950">정부지원금 신청 가이드</h1>
-        <p className="mt-4 text-lg leading-8 text-slate-600">신청 전에 헷갈리기 쉬운 공식 사이트, 서류, 소득 기준, 실업급여와 월세 지원 조건을 쉽게 정리했습니다.</p>
+        <p className="mt-4 text-lg leading-8 text-slate-600">신청 전 헷갈리기 쉬운 공식 사이트, 서류, 소득 기준을 정리했습니다.</p>
+      </div>
+      <div className="mt-8 max-w-4xl space-y-4 text-sm leading-7 text-slate-600 md:text-base md:leading-8">
+        {intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </div>
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {guides.map((guide) => (

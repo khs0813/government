@@ -31,6 +31,7 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const benefit = getBenefitBySlug(slug);
   if (!benefit) notFound();
+  const detailGuidePath = `/benefits/${benefit.slug}/`;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
@@ -51,7 +52,8 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
           <p className="mt-4 text-lg leading-8 text-slate-600">{benefit.shortDescription}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <ButtonLink href={benefit.officialUrl}>공식 신청처</ButtonLink>
-            <ButtonLink href={benefit.sourceUrl} variant="secondary">상세 안내 확인</ButtonLink>
+            <ButtonLink href={benefit.sourceUrl} variant="secondary">공식 출처</ButtonLink>
+            <ButtonLink href={detailGuidePath} variant="ghost">상세 안내</ButtonLink>
           </div>
           <div className="mt-8">
             <BenefitSearchForm benefitId={benefit.id} />
@@ -68,6 +70,7 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
             <div className="mt-5 grid gap-3">
               <ButtonLink href={benefit.officialUrl} className="w-full">공식 신청처 바로가기</ButtonLink>
               <ButtonLink href={benefit.sourceUrl} variant="secondary" className="w-full">공식 출처 확인</ButtonLink>
+              <ButtonLink href={detailGuidePath} variant="ghost" className="w-full">상세 안내 보기</ButtonLink>
             </div>
           </div>
           <DisclaimerBox />

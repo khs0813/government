@@ -2,7 +2,7 @@ import { createMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createMetadata({
   title: "문의와 오류 제보 - 지원금 계산기 운영 연락처",
-  description: "공식 공고 링크가 바뀌었거나 지원금 조건 설명에 오류가 있을 때 운영팀에 보낼 항목과 이메일 주소를 확인하세요.",
+  description: "지원금 정보 오류, 공식 링크 변경, 서비스 개선 의견을 보낼 연락처와 제보 항목을 확인하세요.",
   path: "/contact/"
 });
 
@@ -36,6 +36,10 @@ const unavailable = [
 ];
 
 export default function ContactPage() {
+  const intro = [
+    "문의 페이지는 지원금 정보의 정확도를 유지하기 위한 제보 창구입니다. 공식 공고 링크가 이동했거나, 신청 기간이 바뀌었거나, 대상자·지원 금액·서류 안내가 담당 기관의 최신 기준과 다르게 보이는 경우 페이지 주소와 비교한 공식 링크를 함께 보내주시면 확인에 도움이 됩니다.",
+    "이 연락처는 정보 오류 제보와 서비스 개선 의견을 받기 위한 용도입니다. 개별 사용자의 실제 수급 가능 여부 확정, 신청 대행, 기관 심사 결과 예측, 세무·법률 자문은 제공하지 않습니다. 주민등록번호, 계좌번호, 신분증 사본 같은 민감정보는 보내지 말고, 신청 여부는 정부24, 복지로, 고용24, 국세청 등 공식 기관에서 직접 확인하세요."
+  ];
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
       <div className="max-w-3xl">
@@ -44,6 +48,9 @@ export default function ContactPage() {
         <p className="mt-4 text-lg leading-8 text-slate-600">
           지원금 정보 오류, 공식 링크 변경, 서비스 개선 제안은 아래 연락처로 보내주세요.
         </p>
+      </div>
+      <div className="mt-8 max-w-4xl space-y-4 text-sm leading-7 text-slate-600 md:text-base md:leading-8">
+        {intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </div>
 
       <section className="mt-10 rounded-2xl border border-brand-100 bg-brand-50 p-6 md:p-8">
