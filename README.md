@@ -26,9 +26,10 @@ cp .env.example .env.local
 ```
 
 ```env
-NEXT_PUBLIC_SITE_URL=https://your-domain.co.kr
+NEXT_PUBLIC_SITE_URL=https://jiwoncalc.co.kr
 NEXT_PUBLIC_NAVER_VERIFICATION=네이버_소유확인값
 NEXT_PUBLIC_GOOGLE_VERIFICATION=구글_소유확인값
+NEXT_PUBLIC_CONTACT_EMAIL=운영이메일@example.com
 ```
 
 ## 포함된 기능
