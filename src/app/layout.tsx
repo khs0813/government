@@ -6,6 +6,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import { websiteJsonLd } from "@/lib/seo/jsonLd";
 
+const naverVerification = process.env.NEXT_PUBLIC_NAVER_VERIFICATION || "046a8720f56f97fa77fd7ad6a92400fa7c9cc011";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   applicationName: siteConfig.name,
@@ -57,9 +59,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
-    other: process.env.NEXT_PUBLIC_NAVER_VERIFICATION
-      ? { "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_VERIFICATION }
-      : undefined
+    other: {
+      "naver-site-verification": naverVerification
+    }
   }
 };
 
