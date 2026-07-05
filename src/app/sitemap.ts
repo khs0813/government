@@ -3,7 +3,7 @@ import { benefits } from "@/data/benefits";
 import { guides } from "@/data/guides";
 import { absoluteUrl } from "@/lib/site";
 
-const staticPages = ["/", "/benefits/", "/benefits/youth/", "/benefits/housing/", "/benefits/childcare/", "/benefits/employment/", "/benefits/senior/", "/benefits/low-income/", "/guides/", "/about/", "/methodology/", "/editorial-policy/", "/privacy/", "/disclaimer/", "/contact/"];
+const staticPages = ["/", "/calculators/", "/benefits/", "/benefits/youth/", "/benefits/housing/", "/benefits/childcare/", "/benefits/employment/", "/benefits/senior/", "/benefits/low-income/", "/guides/", "/about/", "/methodology/", "/editorial-policy/", "/privacy/", "/disclaimer/", "/contact/"];
 const defaultLastModified = new Date("2026-07-04T12:00:00+09:00");
 
 function lastModifiedFromDate(date: string) {
@@ -18,6 +18,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       path: `/benefits/${benefit.slug}/`,
       lastModified: lastModifiedFromDate(benefit.sourceCheckedAt),
       priority: 0.8
+    })),
+    ...activeBenefits.map((benefit) => ({
+      path: `/calculators/${benefit.slug}/`,
+      lastModified: lastModifiedFromDate(benefit.sourceCheckedAt),
+      priority: 0.85
     })),
     ...guides.map((guide) => ({
       path: `/guides/${guide.slug}/`,

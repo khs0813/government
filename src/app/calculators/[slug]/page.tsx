@@ -3,12 +3,13 @@ import { benefits, getBenefitBySlug } from "@/data/benefits";
 import { BenefitSearchForm } from "@/components/calculators/BenefitSearchForm";
 import { DisclaimerBox } from "@/components/calculators/DisclaimerBox";
 import { RelatedCalculators } from "@/components/calculators/RelatedCalculators";
+import { ButtonLink } from "@/components/ui/Button";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createMetadata } from "@/lib/seo/metadata";
-import { breadcrumbJsonLd, faqJsonLd, webApplicationJsonLd } from "@/lib/seo/jsonLd";
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, webApplicationJsonLd } from "@/lib/seo/jsonLd";
 
 export function generateStaticParams() {
-  return benefits.map((benefit) => ({ slug: benefit.slug }));
+  return benefits.filter((benefit) => benefit.isActive).map((benefit) => ({ slug: benefit.slug }));
 }
 
 type PageProps = {
@@ -19,7 +20,11 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const benefit = getBenefitBySlug(slug);
   if (!benefit) return {};
-  return createMetadata({ title: benefit.seoTitle, description: benefit.seoDescription, path: `/calculators/${benefit.slug}/` });
+  return createMetadata({
+    title: benefit.seoTitle,
+    description: `${benefit.calculatorTitle}에서 ${benefit.agencyName} 기준 핵심 조건을 점검하고 공식 신청처와 상세 안내 링크를 함께 확인하세요.`,
+    path: `/calculators/${benefit.slug}/`
+  });
 }
 
 export default async function CalculatorDetailPage({ params }: PageProps) {
@@ -32,12 +37,22 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
       <JsonLd data={breadcrumbJsonLd([{ name: "홈", path: "/" }, { name: "계산기", path: "/calculators/" }, { name: benefit.calculatorTitle, path: `/calculators/${benefit.slug}/` }])} />
       <JsonLd data={faqJsonLd(benefit.faq)} />
       <JsonLd data={webApplicationJsonLd({ name: benefit.calculatorTitle, description: benefit.seoDescription, path: `/calculators/${benefit.slug}/` })} />
+      <JsonLd data={articleJsonLd({
+        headline: benefit.seoTitle,
+        description: `${benefit.title} 계산기 이용 전 확인할 신청 조건, 공식 안내, 신청처 링크를 정리했습니다.`,
+        path: `/calculators/${benefit.slug}/`,
+        dateModified: benefit.sourceCheckedAt
+      })} />
 
       <div className="grid gap-10 lg:grid-cols-[1fr_340px]">
         <div>
           <p className="text-sm font-bold text-brand-600">지원금 계산기</p>
           <h1 className="mt-3 text-4xl font-black text-slate-950">{benefit.calculatorTitle}</h1>
           <p className="mt-4 text-lg leading-8 text-slate-600">{benefit.shortDescription}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ButtonLink href={benefit.officialUrl}>공식 신청처</ButtonLink>
+            <ButtonLink href={benefit.sourceUrl} variant="secondary">상세 안내 확인</ButtonLink>
+          </div>
           <div className="mt-8">
             <BenefitSearchForm benefitId={benefit.id} />
           </div>
@@ -50,6 +65,10 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
               <div><dt className="font-bold text-slate-950">지원 금액</dt><dd>{benefit.supportAmountText}</dd></div>
               <div><dt className="font-bold text-slate-950">신청 기간</dt><dd>{benefit.applicationPeriodText}</dd></div>
             </dl>
+            <div className="mt-5 grid gap-3">
+              <ButtonLink href={benefit.officialUrl} className="w-full">공식 신청처 바로가기</ButtonLink>
+              <ButtonLink href={benefit.sourceUrl} variant="secondary" className="w-full">공식 출처 확인</ButtonLink>
+            </div>
           </div>
           <DisclaimerBox />
         </aside>

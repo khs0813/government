@@ -1,8 +1,8 @@
 import { createMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createMetadata({
-  title: "문의",
-  description: "지원금 정보 오류 제보, 공식 출처 변경 요청, 서비스 개선 제안, 제휴 문의 접수 방법을 안내합니다.",
+  title: "문의와 오류 제보 - 지원금 계산기 운영 연락처",
+  description: "공식 공고 링크가 바뀌었거나 지원금 조건 설명에 오류가 있을 때 운영팀에 보낼 항목과 이메일 주소를 확인하세요.",
   path: "/contact/"
 });
 

@@ -8,7 +8,7 @@ export function Footer() {
         <div className="md:col-span-2">
           <p className="text-lg font-extrabold text-white">{siteConfig.name}</p>
           <p className="mt-3 max-w-xl text-sm leading-7 text-slate-400">
-            입력 정보를 바탕으로 받을 가능성이 있는 정부지원금 후보를 간단히 확인하는 정보성 계산기입니다. 실제 신청 가능 여부는 각 기관 심사 결과에 따라 달라집니다.
+            정부지원금 후보를 빠르게 확인하고 공식 신청처로 이동할 수 있습니다.
           </p>
         </div>
         <div>

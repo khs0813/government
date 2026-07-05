@@ -7,7 +7,7 @@ import { categoryLabels } from "@/types/benefit";
 
 export const metadata = createMetadata({
   title: "정부지원금 전체 목록 - 청년·주거·고용·육아 지원금",
-  description: "청년, 주거, 출산·육아, 고용, 노인, 저소득층 지원금을 카테고리별로 확인하세요.",
+  description: "청년, 주거, 육아, 고용, 노인, 저소득층 제도를 한 화면에서 비교하고 각 지원금의 신청기관과 공식 링크로 이동하세요.",
   path: "/benefits/"
 });
 
