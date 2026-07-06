@@ -160,7 +160,7 @@ export const benefits: Benefit[] = [
     sourceCheckedAt: "2026-07-06",
     isActive: true,
     isVerified: false,
-    calculatorTitle: "청년도약계좌 신규가입 종료 및 대체상품 안내",
+    calculatorTitle: "청년도약계좌 신규가입 종료 | 기존 가입자·청년미래적금 확인",
     seoTitle: "청년도약계좌 신규가입 종료 | 기존 가입자·청년미래적금 확인",
     seoDescription: "청년도약계좌 신규 가입 종료 후 기존 가입자의 유지·만기·갈아타기 확인 사항과 청년미래적금 대체 상품을 안내합니다.",
     benefitSeoDescription: "청년도약계좌 신규 가입 종료 이후 기존 가입자가 확인해야 할 유지, 만기, 특별중도해지, 청년미래적금 전환 관련 공식 안내를 정리했습니다.",
