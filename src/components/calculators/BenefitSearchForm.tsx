@@ -16,11 +16,13 @@ const propertyAmounts = [50000000, 100000000, 240000000, 500000000, 800000000] a
 const maritalStatuses = ["single", "married", "unknown"] as const;
 const employmentStatuses = ["employed", "self_employed", "unemployed", "student", "retired", "none"] as const;
 const housingTypes = ["own", "jeonse", "monthly_rent", "family", "unknown"] as const;
+const youthFutureWorkStatuses = ["sme_employee", "new_sme_employee", "small_business_owner", "not_applicable", "unknown"] as const;
 
 const limits = {
-  age: { min: 0, max: 120 },
+  age: { min: 1, max: 120 },
   householdSize: { min: 1, max: 20 },
   childrenCount: { min: 0, max: 20 },
+  militaryServiceYears: { min: 0, max: 6 },
   moneyManwon: { min: 0, max: 1000000 }
 } as const;
 
@@ -39,7 +41,13 @@ const fieldLabels: Record<keyof UserInput, string> = {
   isHomeOwner: "주택 보유 여부",
   isPregnantOrPostpartum: "임신/출산 관련",
   isOnParentalLeave: "육아휴직 중/예정",
-  isLowIncomeHousehold: "저소득/차상위 해당"
+  isLowIncomeHousehold: "저소득/차상위 해당",
+  militaryServiceYears: "병역 이행 기간",
+  hasPreviousYearIncomeProof: "직전연도 소득 확인 가능 여부",
+  needsHouseholdRequirementCheck: "가구요건 공식 확인 필요",
+  youthFutureWorkStatus: "중소기업·신규취업·소상공인 여부",
+  hasExistingYouthSavingsAccount: "기존 청년도약계좌 가입 여부",
+  wantsYouthFutureSwitch: "청년미래적금 갈아타기 관심 여부"
 };
 
 const groupFields = {
@@ -54,7 +62,13 @@ const groupFields = {
     "childrenCount",
     "isPregnantOrPostpartum",
     "isOnParentalLeave",
-    "isLowIncomeHousehold"
+    "isLowIncomeHousehold",
+    "militaryServiceYears",
+    "hasPreviousYearIncomeProof",
+    "needsHouseholdRequirementCheck",
+    "youthFutureWorkStatus",
+    "hasExistingYouthSavingsAccount",
+    "wantsYouthFutureSwitch"
   ] as Array<keyof UserInput>
 };
 
@@ -93,6 +107,42 @@ function numberEnumOrUndefined<T extends number>(value: FormDataEntryValue | nul
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return undefined;
   return allowed.includes(parsed as T) ? parsed as T : undefined;
+}
+
+function hasRawValue(value: FormDataEntryValue | null) {
+  return typeof value === "string" && value.trim() !== "";
+}
+
+function validateNumberField(formData: FormData, field: keyof UserInput, min: number, max: number, unitLabel?: string) {
+  const value = formData.get(String(field));
+  if (!hasRawValue(value)) return undefined;
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || !Number.isInteger(parsed)) return `${fieldLabels[field]}은 숫자로 입력하세요.`;
+  if (parsed < min || parsed > max) return `${fieldLabels[field]}은 ${min}~${max}${unitLabel || ""} 범위로 입력하세요.`;
+  return undefined;
+}
+
+function validateFormData(formData: FormData, fields: Set<keyof UserInput>, requireVisibleFields: boolean) {
+  const errors: string[] = [];
+  if (requireVisibleFields) {
+    fields.forEach((field) => {
+      const value = formData.get(String(field));
+      if (!hasRawValue(value)) errors.push(`${fieldLabels[field]}을(를) 입력하거나 선택하세요.`);
+    });
+  }
+
+  [
+    validateNumberField(formData, "age", limits.age.min, limits.age.max, "세"),
+    validateNumberField(formData, "householdSize", limits.householdSize.min, limits.householdSize.max, "명"),
+    validateNumberField(formData, "childrenCount", limits.childrenCount.min, limits.childrenCount.max, "명"),
+    validateNumberField(formData, "militaryServiceYears", limits.militaryServiceYears.min, limits.militaryServiceYears.max, "년"),
+    validateNumberField(formData, "monthlyIncome", limits.moneyManwon.min, limits.moneyManwon.max, "만원"),
+    validateNumberField(formData, "annualIncome", limits.moneyManwon.min, limits.moneyManwon.max, "만원")
+  ].forEach((error) => {
+    if (error) errors.push(error);
+  });
+
+  return Array.from(new Set(errors));
 }
 
 function fieldsForRules(rules: BenefitRule[]) {
@@ -278,6 +328,48 @@ function RenderField({ field }: { field: keyof UserInput }) {
           <SegmentedField name="isLowIncomeHousehold" options={[{ value: "true", label: "예" }, { value: "false", label: "아니오" }]} />
         </FieldFrame>
       );
+    case "militaryServiceYears":
+      return (
+        <FieldFrame label="병역 이행 기간" hint="없으면 0, 병역 이행자는 최대 6년까지 입력하세요.">
+          <input name="militaryServiceYears" type="number" min={limits.militaryServiceYears.min} max={limits.militaryServiceYears.max} step="1" inputMode="numeric" className={inputClass} placeholder="예: 0" />
+        </FieldFrame>
+      );
+    case "hasPreviousYearIncomeProof":
+      return (
+        <FieldFrame label="직전연도 소득 확인 가능 여부">
+          <SegmentedField name="hasPreviousYearIncomeProof" options={[{ value: "true", label: "가능" }, { value: "false", label: "확인 필요" }]} />
+        </FieldFrame>
+      );
+    case "needsHouseholdRequirementCheck":
+      return (
+        <FieldFrame label="가구요건 공식 확인">
+          <SegmentedField name="needsHouseholdRequirementCheck" options={[{ value: "true", label: "확인 필요" }, { value: "false", label: "모름" }]} />
+        </FieldFrame>
+      );
+    case "youthFutureWorkStatus":
+      return (
+        <FieldFrame label="중소기업·신규취업·소상공인 여부" hint="우대형 가능성은 공식 심사에서 자동 분류될 수 있습니다.">
+          <SelectField name="youthFutureWorkStatus">
+            <option value="unknown">선택</option>
+            <option value="sme_employee">중소기업 재직자</option>
+            <option value="new_sme_employee">중소기업 신규 취업자</option>
+            <option value="small_business_owner">소상공인</option>
+            <option value="not_applicable">해당 없음</option>
+          </SelectField>
+        </FieldFrame>
+      );
+    case "hasExistingYouthSavingsAccount":
+      return (
+        <FieldFrame label="기존 청년도약계좌 가입 여부">
+          <SegmentedField name="hasExistingYouthSavingsAccount" options={[{ value: "true", label: "가입 중" }, { value: "false", label: "아니오" }]} />
+        </FieldFrame>
+      );
+    case "wantsYouthFutureSwitch":
+      return (
+        <FieldFrame label="청년미래적금 갈아타기 관심 여부">
+          <SegmentedField name="wantsYouthFutureSwitch" options={[{ value: "true", label: "관심 있음" }, { value: "false", label: "아니오" }]} />
+        </FieldFrame>
+      );
   }
 }
 
@@ -304,6 +396,7 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
   const rules = useMemo(() => (benefitId ? benefitRules.filter((rule) => rule.benefitId === benefitId) : benefitRules), [benefitId]);
   const visibleFields = useMemo(() => fieldsForRules(rules), [rules]);
   const [results, setResults] = useState<EligibilityResult[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
   const [shouldScrollToResults, setShouldScrollToResults] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -330,6 +423,14 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    const nextErrors = validateFormData(formData, visibleFields, Boolean(benefitId));
+    if (nextErrors.length) {
+      setResults([]);
+      setErrors(nextErrors);
+      return;
+    }
+
+    setErrors([]);
     const input: UserInput = {
       age: numberInRangeOrUndefined(formData.get("age"), limits.age.min, limits.age.max),
       region: stringEnumOrUndefined(formData.get("region"), regions),
@@ -345,7 +446,13 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
       isHomeOwner: booleanOrUndefined(formData.get("isHomeOwner")),
       isPregnantOrPostpartum: booleanOrUndefined(formData.get("isPregnantOrPostpartum")),
       isOnParentalLeave: booleanOrUndefined(formData.get("isOnParentalLeave")),
-      isLowIncomeHousehold: booleanOrUndefined(formData.get("isLowIncomeHousehold"))
+      isLowIncomeHousehold: booleanOrUndefined(formData.get("isLowIncomeHousehold")),
+      militaryServiceYears: numberInRangeOrUndefined(formData.get("militaryServiceYears"), limits.militaryServiceYears.min, limits.militaryServiceYears.max),
+      hasPreviousYearIncomeProof: booleanOrUndefined(formData.get("hasPreviousYearIncomeProof")),
+      needsHouseholdRequirementCheck: booleanOrUndefined(formData.get("needsHouseholdRequirementCheck")),
+      youthFutureWorkStatus: stringEnumOrDefault(formData.get("youthFutureWorkStatus"), youthFutureWorkStatuses, "unknown"),
+      hasExistingYouthSavingsAccount: booleanOrUndefined(formData.get("hasExistingYouthSavingsAccount")),
+      wantsYouthFutureSwitch: booleanOrUndefined(formData.get("wantsYouthFutureSwitch"))
     };
 
     setResults(evaluateBenefits(input, rules));
@@ -390,19 +497,27 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
           ) : null}
 
           <DisclaimerBox />
+          {errors.length ? (
+            <div role="alert" aria-live="assertive" className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm leading-6 text-rose-900">
+              <p className="font-extrabold">입력값을 확인하세요</p>
+              <ul className="mt-2 list-disc space-y-1 pl-5">
+                {errors.map((error) => <li key={error}>{error}</li>)}
+              </ul>
+            </div>
+          ) : null}
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 md:flex-row md:items-center md:justify-between">
-            <p className="text-sm leading-6 text-slate-500">모르는 항목은 비워도 됩니다. 결과에서 추가 확인이 필요한 항목을 알려드립니다.</p>
+            <p className="text-sm leading-6 text-slate-500">{benefitId ? "표시된 항목을 입력한 뒤 참고용 결과를 확인하세요." : "모르는 항목은 비워도 됩니다. 결과에서 추가 확인이 필요한 항목을 알려드립니다."}</p>
             <Button type="submit" className="w-full rounded-xl md:w-auto">결과 확인하기</Button>
           </div>
         </form>
       </Card>
 
       {results.length ? (
-        <div ref={resultsRef} tabIndex={-1} className="scroll-mt-6 space-y-4 outline-none">
+        <div ref={resultsRef} tabIndex={-1} aria-live="polite" className="scroll-mt-6 space-y-4 outline-none">
           <div>
             <p className="text-sm font-bold text-brand-600">계산 결과</p>
             <h2 className="mt-1 text-3xl font-extrabold text-slate-950">지원금 후보</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-600">가능성이 높은 순서로 정렬했습니다. 실제 지급 여부는 공식 신청기관 심사에서 확정됩니다.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-600">가능성이 높은 순서로 정렬했습니다. 이 결과는 사전 참고용이며, 실제 대상 여부와 지급액은 공식 기관 심사 결과에 따라 달라집니다.</p>
           </div>
           <DisclaimerBox />
           <MissingFieldsNotice results={results} />

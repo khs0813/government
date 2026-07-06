@@ -17,7 +17,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: true,
     calculatorTitle: "근로장려금 자격 계산기",
-    seoTitle: "근로장려금 자격 계산기 - 소득·가구유형별 신청 가능 여부",
+    seoTitle: "근로장려금 계산기 | 2026 신청 가능성·소득·재산 기준 확인",
     seoDescription: "근로장려금 신청 가능성을 소득, 가구유형, 재산 조건으로 간단히 확인하세요.",
     faq: [
       { question: "이 계산기로 실제 지급액을 확정할 수 있나요?", answer: "아니요. 입력값을 바탕으로 한 단순 추정이며, 실제 지급 여부와 금액은 국세청 심사 결과에 따라 달라집니다." },
@@ -40,7 +40,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: true,
     calculatorTitle: "자녀장려금 자격 계산기",
-    seoTitle: "자녀장려금 자격 계산기 - 자녀 수와 소득 기준 확인",
+    seoTitle: "자녀장려금 계산기 | 자녀 수·소득 기준별 신청 가능성 확인",
     seoDescription: "자녀장려금 신청 가능성을 자녀 수, 소득, 재산 조건으로 간단히 확인하세요.",
     faq: [
       { question: "자녀 수가 많으면 무조건 받을 수 있나요?", answer: "아니요. 부양자녀 조건 외에도 소득과 재산 조건을 함께 확인해야 합니다." },
@@ -63,7 +63,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: false,
     calculatorTitle: "실업급여 예상액 계산기",
-    seoTitle: "실업급여 계산기 - 예상 지급액과 수급기간 확인",
+    seoTitle: "실업급여 계산기 | 고용보험·퇴사 사유·근무기간 기준 확인",
     seoDescription: "실업급여 수급 가능성을 고용보험, 실직 상태, 구직활동 조건으로 확인하세요.",
     faq: [
       { question: "자진퇴사도 실업급여를 받을 수 있나요?", answer: "일반적으로 제한될 수 있으나 예외 사유가 있을 수 있어 고용센터 확인이 필요합니다." },
@@ -86,7 +86,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: false,
     calculatorTitle: "육아휴직급여 계산기",
-    seoTitle: "육아휴직급여 계산기 - 월급 기준 예상 급여 확인",
+    seoTitle: "육아휴직급여 계산기 | 통상임금 기준 예상 급여 확인",
     seoDescription: "육아휴직급여 신청 가능성을 고용보험, 자녀, 휴직 상태 기준으로 확인하세요.",
     faq: [
       { question: "고용보험 가입 여부가 중요한가요?", answer: "네. 육아휴직급여는 고용보험과 관련된 급여이므로 가입 요건 확인이 필요합니다." },
@@ -109,7 +109,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: false,
     calculatorTitle: "출산휴가급여 계산기",
-    seoTitle: "출산휴가급여 계산기 - 출산전후휴가 급여 예상액",
+    seoTitle: "출산휴가급여 계산기 | 출산전후휴가 급여 예상 계산",
     seoDescription: "출산휴가급여 신청 가능성을 임신·출산, 고용보험 조건으로 확인하세요.",
     faq: [
       { question: "출산 예정이어도 확인할 수 있나요?", answer: "네. 임신 또는 출산 관련 상태를 선택해 예상 가능성을 확인할 수 있습니다." },
@@ -132,7 +132,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: false,
     calculatorTitle: "청년 월세 지원 자격 계산기",
-    seoTitle: "청년 월세 지원 자격 계산기 - 나이·소득·거주조건 확인",
+    seoTitle: "청년월세 지원 계산기 | 무주택·소득·월세 기준 확인",
     seoDescription: "청년 월세 지원 가능성을 나이, 월세 거주, 무주택 조건으로 확인하세요.",
     faq: [
       { question: "지역마다 조건이 다른가요?", answer: "네. 중앙정부 청년월세 한시 특별지원 외에도 지자체 사업은 조건, 신청기간, 금액이 다를 수 있습니다." },
@@ -144,22 +144,48 @@ export const benefits: Benefit[] = [
     title: "청년도약계좌",
     slug: "youth-savings-support",
     category: "youth",
-    shortDescription: "청년의 중장기 자산형성을 돕는 정책 금융상품입니다.",
-    targetUsers: ["19~34세 청년", "개인소득 요건 충족자", "가구소득 요건 확인 필요자"],
-    supportAmountText: "월 납입액, 개인소득 구간, 정부기여금, 우대금리에 따라 달라집니다.",
-    applicationPeriodText: "서민금융진흥원 및 취급은행의 가입 신청 일정에 따릅니다.",
+    shortDescription: "청년도약계좌는 신규 가입이 종료된 상품이며, 기존 가입자는 유지·만기·전환 가능 여부를 공식 안내에서 확인해야 합니다.",
+    targetUsers: ["기존 청년도약계좌 가입자", "청년미래적금 대체 상품 확인 필요자"],
+    supportAmountText: "신규 가입은 종료되었습니다. 기존 가입자의 유지, 만기, 특별중도해지, 청년미래적금 갈아타기 가능 여부는 공식 안내에서 확인해야 합니다.",
+    applicationPeriodText: "신규 가입 종료. 기존 가입자는 금융위원회·서민금융진흥원·취급기관 공식 안내를 확인하세요.",
     agencyName: "금융위원회/서민금융진흥원",
-    officialUrl: "https://ylaccount.kinfa.or.kr/main",
-    sourceUrl: "https://ylaccount.kinfa.or.kr/main",
-    sourceCheckedAt: "2026-07-04",
+    officialUrl: "https://www.fsc.go.kr/no010101/87106",
+    sourceUrl: "https://www.fsc.go.kr/no010101/87106",
+    sourceCheckedAt: "2026-07-06",
     isActive: true,
     isVerified: false,
-    calculatorTitle: "청년도약계좌 자격 계산기",
-    seoTitle: "청년도약계좌 자격 계산기 - 나이·소득 조건 확인",
-    seoDescription: "청년도약계좌 가입 가능성을 나이, 근로상태, 소득 조건으로 확인하세요.",
+    calculatorTitle: "청년도약계좌 신규가입 종료 안내",
+    seoTitle: "청년도약계좌 신규가입 종료 안내 | 청년미래적금 비교",
+    seoDescription: "청년도약계좌 신규 가입 종료 후 기존 가입자 확인 사항과 청년미래적금 대체 상품을 안내합니다. 결과는 참고용이며 공식 기관 확인이 필요합니다.",
     faq: [
-      { question: "소득이 없으면 신청할 수 있나요?", answer: "청년도약계좌는 개인소득과 가구소득 요건을 확인하므로 소득 증빙 가능 여부를 공식 안내에서 확인해야 합니다." },
-      { question: "금융상품 가입을 대행하나요?", answer: "아니요. 이 사이트는 정보 제공과 공식 링크 안내만 제공합니다." }
+      { question: "청년도약계좌 신규 가입이 가능한가요?", answer: "아니요. 2026년 현재 청년도약계좌 신규 가입은 종료된 것으로 안내하고, 신규 가입자는 청년미래적금 등 대체 상품을 확인해야 합니다." },
+      { question: "기존 가입자는 무엇을 확인해야 하나요?", answer: "유지, 만기, 특별중도해지, 청년미래적금 갈아타기 가능 여부를 금융위원회, 서민금융진흥원, 취급기관 공식 안내에서 확인해야 합니다." }
+    ]
+  },
+  {
+    id: "youth-future-savings",
+    title: "청년미래적금",
+    slug: "youth-future-savings",
+    category: "youth",
+    shortDescription: "청년도약계좌 종료 후 도입된 청년 자산형성 정책상품으로, 나이·소득·가구요건·우대형 요건을 공식 심사로 확인합니다.",
+    targetUsers: ["19~34세 청년", "직전연도 소득 확인 가능자", "중소기업 재직자·신규 취업자", "소상공인", "청년도약계좌 갈아타기 검토자"],
+    supportAmountText: "월 최대 50만원 한도 자유적립식 3년 만기 상품이며, 소득수준·근로형태에 따라 정부기여금 지원이 달라질 수 있습니다.",
+    applicationPeriodText: "금융위원회 2026-06-15 안내 기준 최초 가입신청 2026-06-22~2026-07-03, 심사 2026-07-06~2026-07-24, 계좌개설 2026-07-27~2026-08-07.",
+    agencyName: "금융위원회/서민금융진흥원",
+    officialUrl: "https://www.fsc.go.kr/no010101/87106",
+    sourceUrl: "https://www.fsc.go.kr/no010101/87106",
+    sourceCheckedAt: "2026-07-06",
+    isActive: true,
+    isVerified: true,
+    calculatorTitle: "청년미래적금 계산기",
+    seoTitle: "청년미래적금 계산기 | 가입 가능성·갈아타기 확인",
+    seoDescription: "청년미래적금 가입 가능성과 청년도약계좌 갈아타기 확인 사항을 참고용으로 점검하세요. 최종 가능 여부는 공식 기관 심사 결과에 따릅니다.",
+    faq: [
+      { question: "청년도약계좌 신규 가입이 가능한가요?", answer: "아니요. 청년도약계좌 신규 가입은 종료된 것으로 보고 청년미래적금 등 대체 상품을 확인해야 합니다." },
+      { question: "청년미래적금은 누구나 신청할 수 있나요?", answer: "아니요. 나이, 직전연도 소득 확인, 개인소득, 가구요건, 금융소득 종합과세 여부 등 공식 심사를 통과해야 합니다." },
+      { question: "기존 청년도약계좌 가입자는 갈아탈 수 있나요?", answer: "갈아타기를 검토할 수 있으나, 청년미래적금 계좌 개설 전 청년도약계좌를 먼저 해지하면 갈아타기가 불가할 수 있어 공식 안내를 반드시 확인해야 합니다." },
+      { question: "병역 이행 기간은 나이 계산에 반영되나요?", answer: "금융위원회 안내에 따르면 병역 이행 기간은 최대 6년까지 연령 계산에서 미산입될 수 있습니다." },
+      { question: "계산 결과가 실제 가입 가능 여부를 보장하나요?", answer: "아니요. 이 결과는 사전 참고용이며, 최종 가입 가능 여부는 취급기관 앱 및 서민금융진흥원 심사 결과에 따릅니다." }
     ]
   },
   {
@@ -178,7 +204,7 @@ export const benefits: Benefit[] = [
     isActive: true,
     isVerified: true,
     calculatorTitle: "기초연금 자격 간편 계산기",
-    seoTitle: "기초연금 자격 계산기 - 나이·소득인정액 기준 확인",
+    seoTitle: "기초연금 계산기 | 2026 선정기준액·소득인정액 확인",
     seoDescription: "기초연금 신청 가능성을 나이, 소득, 재산 입력값으로 간단히 확인하세요.",
     faq: [
       { question: "나이만 맞으면 받을 수 있나요?", answer: "아니요. 나이 요건 외에도 소득인정액 기준을 확인해야 합니다." },

@@ -132,3 +132,36 @@ export function itemListJsonLd({
     }))
   };
 }
+
+export function webPageJsonLd({ name, description, path }: { name: string; description: string; path: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    inLanguage: "ko-KR",
+    name,
+    description,
+    url: absoluteUrl(path),
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteConfig.name,
+      url: siteConfig.url
+    }
+  };
+}
+
+export function contactPageJsonLd({ name, description, path, email }: { name: string; description: string; path: string; email: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    inLanguage: "ko-KR",
+    name,
+    description,
+    url: absoluteUrl(path),
+    mainEntity: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+      email
+    }
+  };
+}

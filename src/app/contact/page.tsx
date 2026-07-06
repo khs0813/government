@@ -1,4 +1,6 @@
 import { createMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { contactPageJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
   title: "문의와 오류 제보 - 지원금 계산기 운영 연락처",
@@ -42,6 +44,12 @@ export default function ContactPage() {
   ];
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
+      <JsonLd data={contactPageJsonLd({
+        name: "문의와 오류 제보",
+        description: "지원금 정보 오류, 공식 링크 변경, 서비스 개선 의견을 보낼 연락처와 제보 항목을 안내합니다.",
+        path: "/contact/",
+        email: contactEmail
+      })} />
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">문의</p>
         <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-950 md:text-5xl">문의와 오류 제보</h1>

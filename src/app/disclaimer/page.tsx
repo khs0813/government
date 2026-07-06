@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { createMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { webPageJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
   title: "면책 고지",
@@ -37,6 +39,11 @@ const notices = [
 export default function DisclaimerPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
+      <JsonLd data={webPageJsonLd({
+        name: "면책 고지",
+        description: "지원금 계산 결과와 정보 이용 시 반드시 확인해야 할 한계, 공식 기관 확인 의무, 책임 범위를 안내합니다.",
+        path: "/disclaimer/"
+      })} />
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">정책</p>
         <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-950 md:text-5xl">면책 고지</h1>

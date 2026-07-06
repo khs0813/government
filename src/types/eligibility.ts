@@ -36,6 +36,9 @@ export type BenefitRule = {
   conditions: RuleCondition[];
   eligibleThreshold: number;
   maybeThreshold: number;
+  forceStatus?: EligibilityStatus;
+  forceReasons?: string[];
+  forceWarnings?: string[];
 };
 
 export type EligibilityStatus = "eligible" | "maybe" | "not_eligible" | "unknown";

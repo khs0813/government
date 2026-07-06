@@ -9,8 +9,8 @@ function hasAnyInput(input: UserInput) {
 export function evaluateBenefit(input: UserInput, rule: BenefitRule): EligibilityResult {
   const maxScore = rule.conditions.reduce((sum, condition) => sum + condition.weight, 0);
   let score = 0;
-  const reasons: string[] = [];
-  const warnings: string[] = [];
+  const reasons: string[] = [...(rule.forceReasons || [])];
+  const warnings: string[] = [...(rule.forceWarnings || [])];
   const missingFields: string[] = [];
 
   if (!hasAnyInput(input)) {
@@ -45,7 +45,9 @@ export function evaluateBenefit(input: UserInput, rule: BenefitRule): Eligibilit
   const normalizedScore = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
   let status: EligibilityStatus = "unknown";
 
-  if (normalizedScore >= rule.eligibleThreshold && missingFields.length === 0) {
+  if (rule.forceStatus) {
+    status = rule.forceStatus;
+  } else if (normalizedScore >= rule.eligibleThreshold && missingFields.length === 0) {
     status = "eligible";
   } else if (normalizedScore >= rule.maybeThreshold || missingFields.length > 0) {
     status = "maybe";

@@ -1,4 +1,6 @@
 import { createMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { webPageJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
   title: "개인정보 처리방침",
@@ -60,6 +62,11 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
+      <JsonLd data={webPageJsonLd({
+        name: "개인정보 처리방침",
+        description: "지원금 계산기의 개인정보 수집 범위, 이용 목적, 보관 기준, 외부 서비스 이용 기준을 안내합니다.",
+        path: "/privacy/"
+      })} />
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">정책</p>
         <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-950 md:text-5xl">개인정보 처리방침</h1>

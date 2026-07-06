@@ -8,6 +8,7 @@ export type EmploymentStatus =
 
 export type HousingType = "own" | "jeonse" | "monthly_rent" | "family" | "unknown";
 export type MaritalStatus = "single" | "married" | "unknown";
+export type YouthFutureWorkStatus = "sme_employee" | "new_sme_employee" | "small_business_owner" | "not_applicable" | "unknown";
 
 export type UserInput = {
   age?: number;
@@ -25,4 +26,10 @@ export type UserInput = {
   isPregnantOrPostpartum?: boolean;
   isOnParentalLeave?: boolean;
   isLowIncomeHousehold?: boolean;
+  militaryServiceYears?: number;
+  hasPreviousYearIncomeProof?: boolean;
+  needsHouseholdRequirementCheck?: boolean;
+  youthFutureWorkStatus?: YouthFutureWorkStatus;
+  hasExistingYouthSavingsAccount?: boolean;
+  wantsYouthFutureSwitch?: boolean;
 };
