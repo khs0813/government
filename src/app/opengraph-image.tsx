@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site";
 
+export const dynamic = "force-static";
 export const alt = "지원금 계산기 - 내가 받을 수 있는 정부지원금 찾기";
 export const size = {
   width: 1200,

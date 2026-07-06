@@ -4,7 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, siteConfig } from "@/lib/site";
-import { websiteJsonLd } from "@/lib/seo/jsonLd";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonLd";
 
 const naverVerification = process.env.NEXT_PUBLIC_NAVER_VERIFICATION || "046a8720f56f97fa77fd7ad6a92400fa7c9cc011";
 
@@ -70,6 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body className="text-slate-900 antialiased">
         <JsonLd data={websiteJsonLd()} />
+        <JsonLd data={organizationJsonLd()} />
         <Header />
         <main>{children}</main>
         <Footer />

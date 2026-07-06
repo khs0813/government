@@ -7,6 +7,8 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { categoryLabels } from "@/types/benefit";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { itemListJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
   title: "정부지원금 자격 계산기 - 내가 받을 수 있는 지원금 찾기",
@@ -29,6 +31,16 @@ export default function HomePage() {
 
   return (
     <div>
+      <JsonLd data={itemListJsonLd({
+        name: "인기 정부지원금 계산기",
+        description: "근로장려금, 실업급여, 청년 월세 지원 등 주요 정부지원금 계산기 목록입니다.",
+        path: "/",
+        items: benefits.filter((benefit) => benefit.isActive).map((benefit) => ({
+          name: benefit.calculatorTitle,
+          description: benefit.seoDescription,
+          path: `/calculators/${benefit.slug}/`
+        }))
+      })} />
       <section className="bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_52%,#ecfdf5_100%)]">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 md:grid-cols-[1fr_0.86fr] md:px-6 md:py-20">
           <div className="flex flex-col justify-center">

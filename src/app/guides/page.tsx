@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { guides } from "@/data/guides";
 import { createMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
   title: "정부지원금 가이드 - 신청서류·소득기준·찾는 법",
@@ -15,6 +17,17 @@ export default function GuidesPage() {
   ];
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
+      <JsonLd data={breadcrumbJsonLd([{ name: "홈", path: "/" }, { name: "가이드", path: "/guides/" }])} />
+      <JsonLd data={itemListJsonLd({
+        name: "정부지원금 신청 가이드",
+        description: "정부지원금 신청 전 공식 사이트, 서류, 소득 기준을 확인하는 가이드 목록입니다.",
+        path: "/guides/",
+        items: guides.map((guide) => ({
+          name: guide.title,
+          description: guide.description,
+          path: `/guides/${guide.slug}/`
+        }))
+      })} />
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">가이드</p>
         <h1 className="mt-3 text-4xl font-black text-slate-950">정부지원금 신청 가이드</h1>

@@ -32,6 +32,19 @@ NEXT_PUBLIC_GOOGLE_VERIFICATION=구글_소유확인값
 NEXT_PUBLIC_CONTACT_EMAIL=운영이메일@example.com
 ```
 
+## Render Static Site 배포
+
+이 프로젝트는 `next.config.mjs`의 `output: "export"` 설정으로 정적 파일을 `out` 폴더에 생성합니다.
+
+Render에서 새 Static Site를 만들 때 아래 값을 사용합니다.
+
+```text
+Build Command: npm ci && npm run build
+Publish Directory: out
+```
+
+`render.yaml`을 Blueprint로 연결하면 같은 설정과 보안 헤더가 자동으로 적용됩니다. 루트 도메인 `jiwoncalc.co.kr`을 Custom Domain으로 연결하면 Render가 `www` 서브도메인을 루트 도메인으로 리다이렉트합니다.
+
 ## 포함된 기능
 
 - 메인 통합 지원금 자격 체크

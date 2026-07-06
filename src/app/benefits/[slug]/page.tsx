@@ -22,7 +22,12 @@ export async function generateMetadata({ params }: PageProps) {
   return createMetadata({
     title: `${benefit.title} 신청 조건과 공식 확인`,
     description,
-    path: `/benefits/${benefit.slug}/`
+    path: `/benefits/${benefit.slug}/`,
+    type: "article",
+    publishedTime: benefit.sourceCheckedAt,
+    modifiedTime: benefit.sourceCheckedAt,
+    section: "정부지원금",
+    tags: [benefit.title, benefit.agencyName, "신청 조건", "공식 출처"]
   });
 }
 

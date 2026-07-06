@@ -1,22 +1,55 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
-function createOgImageUrl(title: string, path: string) {
-  const params = new URLSearchParams({ title, page: path });
-  return absoluteUrl(`${siteConfig.ogImage}?${params.toString()}`);
-}
-
 export function createMetadata({
   title,
   description,
-  path = "/"
+  path = "/",
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  section,
+  tags = []
 }: {
   title: string;
   description: string;
   path?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  section?: string;
+  tags?: string[];
 }): Metadata {
   const url = absoluteUrl(path);
-  const imageUrl = createOgImageUrl(title, path);
+  const imageUrl = absoluteUrl(siteConfig.ogImage);
+  const openGraphBase = {
+    siteName: siteConfig.name,
+    title,
+    description,
+    url,
+    locale: siteConfig.locale,
+    images: [
+      {
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+        alt: `${title} - ${siteConfig.name}`
+      }
+    ]
+  };
+  const openGraph = type === "article"
+    ? {
+        ...openGraphBase,
+        type: "article" as const,
+        publishedTime,
+        modifiedTime,
+        section,
+        tags
+      }
+    : {
+        ...openGraphBase,
+        type: "website" as const
+      };
 
   return {
     title,
@@ -38,27 +71,17 @@ export function createMetadata({
         "max-snippet": -1
       }
     },
-    openGraph: {
-      type: "website",
-      siteName: siteConfig.name,
-      title,
-      description,
-      url,
-      locale: siteConfig.locale,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: siteConfig.name
-        }
-      ]
-    },
+    openGraph,
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl]
+      images: [
+        {
+          url: imageUrl,
+          alt: `${title} - ${siteConfig.name}`
+        }
+      ]
     }
   };
 }

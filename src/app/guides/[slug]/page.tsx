@@ -18,7 +18,16 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const guide = getGuideBySlug(slug);
   if (!guide) return {};
-  return createMetadata({ title: guide.title, description: guide.description, path: `/guides/${guide.slug}/` });
+  return createMetadata({
+    title: guide.title,
+    description: guide.description,
+    path: `/guides/${guide.slug}/`,
+    type: "article",
+    publishedTime: guideUpdatedAt,
+    modifiedTime: guideUpdatedAt,
+    section: guide.category,
+    tags: ["정부지원금", guide.category, "신청 가이드"]
+  });
 }
 
 function getActionTitle(index: number) {

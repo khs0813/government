@@ -2,7 +2,7 @@ import Link from "next/link";
 import { benefits } from "@/data/benefits";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createMetadata } from "@/lib/seo/metadata";
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, webApplicationJsonLd } from "@/lib/seo/jsonLd";
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, itemListJsonLd, webApplicationJsonLd } from "@/lib/seo/jsonLd";
 import { categoryLabels } from "@/types/benefit";
 
 export const metadata = createMetadata({
@@ -31,6 +31,16 @@ export default function CalculatorsPage() {
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
       <JsonLd data={breadcrumbJsonLd([{ name: "홈", path: "/" }, { name: "계산기", path: "/calculators/" }])} />
       <JsonLd data={faqJsonLd(calculatorsFaq)} />
+      <JsonLd data={itemListJsonLd({
+        name: "정부지원금 자격 계산기 목록",
+        description: "주요 정부지원금의 신청 가능성을 확인하는 계산기 목록입니다.",
+        path: "/calculators/",
+        items: benefits.filter((benefit) => benefit.isActive).map((benefit) => ({
+          name: benefit.calculatorTitle,
+          description: benefit.seoDescription,
+          path: `/calculators/${benefit.slug}/`
+        }))
+      })} />
       <JsonLd data={articleJsonLd({
         headline: "지원금 자격 확인 계산기 목록",
         description: "지원금별 신청 가능성을 확인할 수 있는 계산기 목록과 공식 확인 경로를 안내합니다.",

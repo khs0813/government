@@ -3,6 +3,8 @@ import { benefits } from "@/data/benefits";
 import { guides } from "@/data/guides";
 import { absoluteUrl } from "@/lib/site";
 
+export const dynamic = "force-static";
+
 const staticPages = ["/", "/calculators/", "/benefits/", "/benefits/youth/", "/benefits/housing/", "/benefits/childcare/", "/benefits/employment/", "/benefits/senior/", "/benefits/low-income/", "/guides/", "/about/", "/methodology/", "/editorial-policy/", "/privacy/", "/disclaimer/", "/contact/"];
 const defaultLastModified = new Date("2026-07-04T12:00:00+09:00");
 

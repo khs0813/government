@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { benefits } from "@/data/benefits";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo/jsonLd";
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, itemListJsonLd } from "@/lib/seo/jsonLd";
 import type { BenefitCategory } from "@/types/benefit";
 import { categoryLabels } from "@/types/benefit";
 
@@ -107,6 +107,16 @@ export function BenefitCategoryPage({ category }: { category: BenefitCategory })
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
       <JsonLd data={breadcrumbJsonLd([{ name: "홈", path: "/" }, { name: "지원금", path: "/benefits/" }, { name: content.title, path }])} />
       <JsonLd data={faqJsonLd(content.faq)} />
+      <JsonLd data={itemListJsonLd({
+        name: `${content.title} 목록`,
+        description: content.lead,
+        path,
+        items: items.map((benefit) => ({
+          name: benefit.title,
+          description: benefit.shortDescription,
+          path: `/benefits/${benefit.slug}/`
+        }))
+      })} />
       <JsonLd data={articleJsonLd({
         headline: `${content.title} 신청 전 확인 기준`,
         description: content.lead,

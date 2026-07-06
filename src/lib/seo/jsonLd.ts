@@ -5,7 +5,23 @@ export function websiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteConfig.name,
-    url: siteConfig.url
+    url: siteConfig.url,
+    inLanguage: "ko-KR",
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url
+    }
+  };
+}
+
+export function organizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.description
   };
 }
 
@@ -53,11 +69,15 @@ export function articleJsonLd({
   return {
     "@context": "https://schema.org",
     "@type": "Article",
+    inLanguage: "ko-KR",
     headline,
     description,
     url: absoluteUrl(path),
+    mainEntityOfPage: absoluteUrl(path),
+    image: absoluteUrl(siteConfig.ogImage),
     datePublished: datePublished || dateModified,
     dateModified,
+    isAccessibleForFree: true,
     author: {
       "@type": "Organization",
       name: siteConfig.name,
@@ -75,10 +95,40 @@ export function webApplicationJsonLd({ name, description, path }: { name: string
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
+    inLanguage: "ko-KR",
     name,
     description,
     url: absoluteUrl(path),
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web"
+  };
+}
+
+export function itemListJsonLd({
+  name,
+  description,
+  path,
+  items
+}: {
+  name: string;
+  description: string;
+  path: string;
+  items: Array<{ name: string; description?: string; path: string }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    inLanguage: "ko-KR",
+    name,
+    description,
+    url: absoluteUrl(path),
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: absoluteUrl(item.path),
+      name: item.name,
+      description: item.description
+    }))
   };
 }

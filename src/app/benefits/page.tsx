@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { benefits } from "@/data/benefits";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
+import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonLd";
 import { createMetadata } from "@/lib/seo/metadata";
 import { categoryLabels } from "@/types/benefit";
 
@@ -19,6 +19,16 @@ export default function BenefitsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
       <JsonLd data={breadcrumbJsonLd([{ name: "홈", path: "/" }, { name: "지원금", path: "/benefits/" }])} />
+      <JsonLd data={itemListJsonLd({
+        name: "정부지원금 전체 목록",
+        description: "청년, 주거, 육아, 고용, 노인, 저소득층 지원금을 비교하는 목록입니다.",
+        path: "/benefits/",
+        items: benefits.filter((benefit) => benefit.isActive).map((benefit) => ({
+          name: benefit.title,
+          description: benefit.shortDescription,
+          path: `/benefits/${benefit.slug}/`
+        }))
+      })} />
       <div className="max-w-3xl">
         <p className="text-sm font-bold text-brand-600">지원금 목록</p>
         <h1 className="mt-3 text-4xl font-black text-slate-950">정부지원금 전체 목록</h1>

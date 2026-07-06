@@ -23,7 +23,12 @@ export async function generateMetadata({ params }: PageProps) {
   return createMetadata({
     title: benefit.seoTitle,
     description: `${benefit.calculatorTitle}에서 ${benefit.agencyName} 기준 핵심 조건을 점검하고 공식 신청처와 상세 안내 링크를 함께 확인하세요.`,
-    path: `/calculators/${benefit.slug}/`
+    path: `/calculators/${benefit.slug}/`,
+    type: "article",
+    publishedTime: benefit.sourceCheckedAt,
+    modifiedTime: benefit.sourceCheckedAt,
+    section: "지원금 계산기",
+    tags: [benefit.title, benefit.calculatorTitle, benefit.agencyName, "자격 확인"]
   });
 }
 
