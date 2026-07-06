@@ -24,6 +24,7 @@ export type Benefit = {
   calculatorTitle: string;
   seoTitle: string;
   seoDescription: string;
+  benefitSeoDescription: string;
   faq: Array<{ question: string; answer: string }>;
 };
 

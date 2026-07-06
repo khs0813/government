@@ -18,10 +18,9 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const benefit = getBenefitBySlug(slug);
   if (!benefit) return {};
-  const description = `${benefit.title}의 대상자, 지원 금액, 신청 시기와 ${benefit.agencyName} 공식 안내 링크를 ${benefit.sourceCheckedAt} 확인 기준으로 정리했습니다.`;
   return createMetadata({
     title: `${benefit.title} 신청 조건과 공식 확인`,
-    description,
+    description: benefit.benefitSeoDescription,
     path: `/benefits/${benefit.slug}/`,
     type: "article",
     publishedTime: benefit.sourceCheckedAt,
@@ -35,7 +34,6 @@ export default async function BenefitDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const benefit = getBenefitBySlug(slug);
   if (!benefit) notFound();
-  const detailDescription = `${benefit.title}의 대상자, 지원 금액, 신청 시기와 ${benefit.agencyName} 공식 안내 링크를 ${benefit.sourceCheckedAt} 확인 기준으로 정리했습니다.`;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-14 md:px-6">
@@ -43,7 +41,7 @@ export default async function BenefitDetailPage({ params }: PageProps) {
       <JsonLd data={faqJsonLd(benefit.faq)} />
       <JsonLd data={articleJsonLd({
         headline: `${benefit.title} 신청 조건과 공식 확인`,
-        description: detailDescription,
+        description: benefit.benefitSeoDescription,
         path: `/benefits/${benefit.slug}/`,
         dateModified: benefit.sourceCheckedAt
       })} />

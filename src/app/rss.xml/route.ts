@@ -5,7 +5,7 @@ import { categoryLabels } from "@/types/benefit";
 
 export const dynamic = "force-static";
 
-const lastBuildDate = new Date("2026-07-04T12:00:00+09:00");
+const lastBuildDate = new Date("2026-07-06T12:00:00+09:00");
 
 function escapeXml(value: string) {
   return value
