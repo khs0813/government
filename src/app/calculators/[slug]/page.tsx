@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps) {
     publishedTime: benefit.sourceCheckedAt,
     modifiedTime: benefit.sourceCheckedAt,
     section: "지원금 계산기",
-    tags: [benefit.title, benefit.calculatorTitle, benefit.agencyName, "자격 확인"]
+    tags: [benefit.title, benefit.calculatorTitle, benefit.agencyName]
   });
 }
 
