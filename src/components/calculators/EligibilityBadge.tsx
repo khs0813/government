@@ -15,6 +15,6 @@ const styles: Record<EligibilityStatus, string> = {
   unknown: "bg-slate-100 text-slate-700 ring-slate-200"
 };
 
-export function EligibilityBadge({ status }: { status: EligibilityStatus }) {
-  return <span className={cx("inline-flex rounded-full px-3 py-1 text-xs font-bold ring-1", styles[status])}>{labels[status]}</span>;
+export function EligibilityBadge({ status, label }: { status: EligibilityStatus; label?: string }) {
+  return <span className={cx("inline-flex rounded-full px-3 py-1 text-xs font-bold ring-1", styles[status])}>{label || labels[status]}</span>;
 }

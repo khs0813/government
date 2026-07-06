@@ -17,6 +17,7 @@ export function evaluateBenefit(input: UserInput, rule: BenefitRule): Eligibilit
     return {
       benefitId: rule.benefitId,
       status: "unknown",
+      statusLabel: rule.forceStatusLabel,
       score: 0,
       reasons: [],
       warnings: ["자격을 추정하려면 최소 한 가지 이상의 정보를 입력해야 합니다."],
@@ -58,6 +59,7 @@ export function evaluateBenefit(input: UserInput, rule: BenefitRule): Eligibilit
   return {
     benefitId: rule.benefitId,
     status,
+    statusLabel: rule.forceStatusLabel,
     score: normalizedScore,
     reasons,
     warnings,

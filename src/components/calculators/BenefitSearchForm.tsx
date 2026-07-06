@@ -462,6 +462,7 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
   const basics = renderGroup(groupFields.basics);
   const income = renderGroup(groupFields.income);
   const situation = renderGroup(groupFields.situation);
+  const formTitle = benefitId === "youth-savings-support" ? "기존 가입자·대체상품 확인" : "자격 간편 체크";
 
   return (
     <div className="space-y-6">
@@ -470,7 +471,7 @@ export function BenefitSearchForm({ benefitId }: { benefitId?: string }) {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm font-extrabold text-brand-600">{benefitId ? "맞춤 계산기" : "통합 계산기"}</p>
-              <h2 className="mt-1 text-2xl font-black text-slate-950">자격 간편 체크</h2>
+              <h2 className="mt-1 text-2xl font-black text-slate-950">{formTitle}</h2>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">이름, 주민등록번호, 전화번호, 상세주소 없이 필요한 조건만 확인합니다.</p>
             </div>
             <div className="rounded-full bg-slate-100 px-4 py-2 text-xs font-extrabold text-slate-600">

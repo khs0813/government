@@ -16,7 +16,7 @@ export function BenefitResultCard({ result }: { result: EligibilityResult }) {
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <EligibilityBadge status={result.status} />
+            <EligibilityBadge status={result.status} label={result.statusLabel} />
             {missingFieldsCount ? <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">추가 입력 {missingFieldsCount}개</span> : null}
           </div>
           <h3 className="mt-3 text-2xl font-black text-slate-950">{benefit.title}</h3>

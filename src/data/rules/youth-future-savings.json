@@ -4,6 +4,16 @@
   "version": "official-check-2026-07-06",
   "isVerified": true,
   "requiresOfficialCheck": true,
+  "forceStatus": "maybe",
+  "forceStatusLabel": "다음 모집 일정 확인 필요",
+  "forceReasons": [
+    "청년미래적금 1차 가입신청은 2026년 7월 3일 종료되었습니다.",
+    "2026년 7월 6일 현재는 가입요건 확인 기간입니다."
+  ],
+  "forceWarnings": [
+    "이미 신청한 사용자는 취급은행 앱 또는 공식 안내에서 심사 결과와 계좌개설 기간을 확인하세요.",
+    "다음 모집 일정은 공식 발표 기준으로 업데이트됩니다."
+  ],
   "source": {
     "name": "금융위원회 청년미래적금 가입절차·심사일정 안내",
     "url": "https://www.fsc.go.kr/no010101/87106",

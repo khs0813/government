@@ -2,7 +2,16 @@ import Link from "next/link";
 import { benefits } from "@/data/benefits";
 
 export function RelatedCalculators({ currentId }: { currentId?: string }) {
-  const items = benefits.filter((benefit) => benefit.id !== currentId).slice(0, 4);
+  const items = benefits
+    .filter((benefit) => benefit.id !== currentId)
+    .sort((a, b) => {
+      if (currentId === "youth-savings-support") {
+        if (a.id === "youth-future-savings") return -1;
+        if (b.id === "youth-future-savings") return 1;
+      }
+      return 0;
+    })
+    .slice(0, 4);
   return (
     <div data-nosnippet className="grid gap-4 md:grid-cols-2">
       {items.map((benefit) => (

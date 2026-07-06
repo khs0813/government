@@ -40,6 +40,7 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
   const detailGuidePath = `/benefits/${benefit.slug}/`;
   const isYouthSavingsEnded = benefit.id === "youth-savings-support";
   const isYouthFutureSavings = benefit.id === "youth-future-savings";
+  const officialButtonLabel = isYouthSavingsEnded || isYouthFutureSavings ? "공식 안내 확인" : "공식 신청처";
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
@@ -68,8 +69,22 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
                 <li>이 페이지는 청년도약계좌 기존 가입자와 대체 상품 확인을 위한 참고용입니다.</li>
               </ul>
               <div className="mt-4">
-                <ButtonLink href="/calculators/youth-future-savings/" className="rounded-xl">청년미래적금 가입 가능성 확인</ButtonLink>
+                <ButtonLink href="/calculators/youth-future-savings/" className="rounded-xl">청년미래적금 대체상품 확인</ButtonLink>
               </div>
+            </section>
+          ) : null}
+          {isYouthFutureSavings ? (
+            <section className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-amber-950">
+              <h2 className="text-lg font-extrabold text-slate-950">청년미래적금 현재 상태 안내</h2>
+              <p className="mt-3">청년미래적금 1차 가입신청은 2026년 7월 3일 종료되었습니다.</p>
+              <p>2026년 7월 6일 현재는 가입요건 확인 기간입니다.</p>
+              <p>이미 신청한 사용자는 취급은행 앱 또는 공식 안내를 통해 심사 결과와 계좌개설 기간을 확인하세요.</p>
+              <p>다음 모집 일정은 공식 발표 기준으로 업데이트됩니다.</p>
+              <dl className="mt-4 grid gap-2 text-xs font-bold md:grid-cols-3">
+                <div className="rounded-xl bg-white/70 px-3 py-2"><dt>기준일</dt><dd className="mt-1 text-slate-950">2026-07-06</dd></div>
+                <div className="rounded-xl bg-white/70 px-3 py-2"><dt>1차 가입신청</dt><dd className="mt-1 text-slate-950">2026-06-22 ~ 2026-07-03</dd></div>
+                <div className="rounded-xl bg-white/70 px-3 py-2"><dt>현재 상태</dt><dd className="mt-1 text-slate-950">가입요건 확인 기간</dd></div>
+              </dl>
             </section>
           ) : null}
           {isYouthFutureSavings ? (
@@ -99,7 +114,7 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
             <PolicyReferenceBox sourceName={benefit.agencyName} sourceUrl={benefit.sourceUrl} sourceCheckedAt={benefit.sourceCheckedAt} officialUrl={benefit.officialUrl} />
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink href={benefit.officialUrl}>공식 신청처</ButtonLink>
+            <ButtonLink href={benefit.officialUrl}>{officialButtonLabel}</ButtonLink>
             <ButtonLink href={benefit.sourceUrl} variant="secondary">공식 출처</ButtonLink>
             <ButtonLink href={detailGuidePath} variant="ghost">상세 안내</ButtonLink>
           </div>
@@ -116,7 +131,7 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
               <div><dt className="font-bold text-slate-950">신청 기간</dt><dd>{benefit.applicationPeriodText}</dd></div>
             </dl>
             <div className="mt-5 grid gap-3">
-              <ButtonLink href={benefit.officialUrl} className="w-full">공식 신청처 바로가기</ButtonLink>
+              <ButtonLink href={benefit.officialUrl} className="w-full">{officialButtonLabel}</ButtonLink>
               <ButtonLink href={benefit.sourceUrl} variant="secondary" className="w-full">공식 출처 확인</ButtonLink>
               <ButtonLink href={detailGuidePath} variant="ghost" className="w-full">상세 안내 보기</ButtonLink>
             </div>

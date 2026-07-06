@@ -37,6 +37,7 @@ export type BenefitRule = {
   eligibleThreshold: number;
   maybeThreshold: number;
   forceStatus?: EligibilityStatus;
+  forceStatusLabel?: string;
   forceReasons?: string[];
   forceWarnings?: string[];
 };
@@ -46,6 +47,7 @@ export type EligibilityStatus = "eligible" | "maybe" | "not_eligible" | "unknown
 export type EligibilityResult = {
   benefitId: string;
   status: EligibilityStatus;
+  statusLabel?: string;
   score: number;
   reasons: string[];
   warnings: string[];

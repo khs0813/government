@@ -29,7 +29,7 @@ export function PolicyReferenceBox({
       </p>
       <div className="mt-4 grid gap-2 sm:grid-cols-2">
         <ButtonLink href={sourceUrl} variant="secondary" className="w-full rounded-xl">공식 출처 확인</ButtonLink>
-        <ButtonLink href={officialUrl} className="w-full rounded-xl">공식 신청/확인</ButtonLink>
+        <ButtonLink href={officialUrl} className="w-full rounded-xl">공식 안내 확인</ButtonLink>
       </div>
     </section>
   );
