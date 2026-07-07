@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Script from "next/script";
 import { useEffect, useState } from "react";
 
 type AdSlotProps = {
@@ -10,6 +9,31 @@ type AdSlotProps = {
   height: number;
   shouldLoadKakao: boolean;
 };
+
+const KAKAO_ADFIT_SCRIPT_SRC = "https://t1.kakaocdn.net/kas/static/ba.min.js";
+let kakaoAdfitRenderTimer: number | null = null;
+
+function requestKakaoAdFitRender() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (kakaoAdfitRenderTimer !== null) {
+    window.clearTimeout(kakaoAdfitRenderTimer);
+  }
+
+  kakaoAdfitRenderTimer = window.setTimeout(() => {
+    kakaoAdfitRenderTimer = null;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = KAKAO_ADFIT_SCRIPT_SRC;
+    script.dataset.kakaoAdfitRender = "true";
+    script.onload = () => script.remove();
+    script.onerror = () => script.remove();
+    document.body.appendChild(script);
+  }, 0);
+}
 
 function isLocalHost(hostname: string) {
   return (
@@ -24,6 +48,12 @@ function isLocalHost(hostname: string) {
 }
 
 function AdSlot({ unit, width, height, shouldLoadKakao }: AdSlotProps) {
+  useEffect(() => {
+    if (shouldLoadKakao) {
+      requestKakaoAdFitRender();
+    }
+  }, [height, shouldLoadKakao, unit, width]);
+
   if (!shouldLoadKakao) {
     return (
       <div
@@ -82,13 +112,6 @@ export function KakaoMobileAd() {
           />
         </div>
       ) : null}
-      {isMobile && shouldLoadKakao ? (
-        <Script
-          id="kakao-adfit"
-          src="https://t1.kakaocdn.net/kas/static/ba.min.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
     </>
   );
 }
@@ -141,13 +164,6 @@ export function KakaoMobileIntroBanners() {
           </div>
         )}
       </div>
-      {shouldLoadKakao ? (
-        <Script
-          id="kakao-adfit"
-          src="https://t1.kakaocdn.net/kas/static/ba.min.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
     </>
   );
 }
@@ -181,13 +197,6 @@ export function KakaoMobileRectangleBanner() {
           shouldLoadKakao={shouldLoadKakao}
         />
       </div>
-      {shouldLoadKakao ? (
-        <Script
-          id="kakao-adfit"
-          src="https://t1.kakaocdn.net/kas/static/ba.min.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
     </>
   );
 }
@@ -223,13 +232,6 @@ export function KakaoInlineBanner() {
           />
         </div>
       </div>
-      {shouldLoadKakao ? (
-        <Script
-          id="kakao-adfit"
-          src="https://t1.kakaocdn.net/kas/static/ba.min.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
     </>
   );
 }
@@ -280,13 +282,6 @@ export function KakaoResponsiveBanner() {
           </div>
         )}
       </div>
-      {shouldLoadKakao ? (
-        <Script
-          id="kakao-adfit"
-          src="https://t1.kakaocdn.net/kas/static/ba.min.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
     </>
   );
 }
