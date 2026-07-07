@@ -6,6 +6,7 @@ import { PolicyReferenceBox } from "@/components/calculators/PolicyReferenceBox"
 import { RelatedCalculators } from "@/components/calculators/RelatedCalculators";
 import { ButtonLink } from "@/components/ui/Button";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { KakaoInlineBanner } from "@/components/ads/KakaoMobileAd";
 import { createMetadata } from "@/lib/seo/metadata";
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, webApplicationJsonLd } from "@/lib/seo/jsonLd";
 
@@ -118,6 +119,7 @@ export default async function CalculatorDetailPage({ params }: PageProps) {
             <ButtonLink href={benefit.sourceUrl} variant="secondary">공식 출처</ButtonLink>
             <ButtonLink href={detailGuidePath} variant="ghost">상세 안내</ButtonLink>
           </div>
+          <KakaoInlineBanner />
           <div className="mt-8">
             <BenefitSearchForm benefitId={benefit.id} />
           </div>

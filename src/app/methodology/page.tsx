@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KakaoInlineBanner } from "@/components/ads/KakaoMobileAd";
 import { createMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createMetadata({
@@ -61,6 +62,8 @@ export default function MethodologyPage() {
           이 사이트는 입력한 조건을 바탕으로 신청해볼 만한 지원금을 먼저 찾도록 돕습니다. 결과는 확정 판정이 아니라 공식 신청 전 참고용 안내입니다.
         </p>
       </div>
+
+      <KakaoInlineBanner />
 
       <section className="mt-10 grid gap-5 lg:grid-cols-3">
         {statuses.map((status) => (

@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { categoryLabels } from "@/types/benefit";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { KakaoMobileIntroBanners, KakaoMobileRectangleBanner } from "@/components/ads/KakaoMobileAd";
 import { itemListJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
@@ -79,6 +80,7 @@ export default function HomePage() {
 
       <div className="mx-auto max-w-7xl px-4 md:px-6" id="calculator">
         <section className="border-b border-slate-200 py-10">
+          <KakaoMobileIntroBanners />
           <div className="max-w-4xl space-y-4 text-sm leading-7 text-slate-600 md:text-base md:leading-8">
             {hubIntro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
@@ -87,6 +89,8 @@ export default function HomePage() {
         <Section eyebrow="통합 자격 확인" title="한 번 입력하고 지원금 후보를 확인하세요" description="입력 조건으로 후보를 찾고 공식 안내를 확인하세요.">
           <BenefitSearchForm />
         </Section>
+
+        <KakaoMobileRectangleBanner />
 
         <Section eyebrow="계산기" title="인기 지원금 계산기" description="제도별 조건을 따로 확인할 수 있습니다.">
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">

@@ -78,9 +78,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={websiteJsonLd()} />
         <JsonLd data={organizationJsonLd()} />
         <Header />
-        <KakaoMobileAd />
         <main>{children}</main>
         <Footer />
+        <KakaoMobileAd />
       </body>
     </html>
   );

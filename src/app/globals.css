@@ -38,18 +38,3 @@ a {
     position: sticky;
   }
 }
-
-.kakao-desktop-side-ad {
-  display: none;
-}
-
-@media (min-width: 1960px) {
-  .kakao-inline-common-ad {
-    display: none;
-  }
-
-  .kakao-desktop-side-ad {
-    right: max(1rem, calc((100vw - 80rem) / 2 - 324px));
-    display: flex;
-  }
-}

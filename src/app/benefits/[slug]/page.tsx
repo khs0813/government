@@ -3,6 +3,7 @@ import { benefits, getBenefitBySlug } from "@/data/benefits";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisclaimerBox } from "@/components/calculators/DisclaimerBox";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { KakaoResponsiveBanner } from "@/components/ads/KakaoMobileAd";
 import { createMetadata } from "@/lib/seo/metadata";
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo/jsonLd";
 
@@ -89,6 +90,7 @@ export default async function BenefitDetailPage({ params }: PageProps) {
         </ul>
       </section>
 
+      <KakaoResponsiveBanner />
       <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-2xl font-extrabold text-slate-950">자주 묻는 질문</h2>
         <div className="mt-5 space-y-5">

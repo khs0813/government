@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getGuideBySlug, guides } from "@/data/guides";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { KakaoResponsiveBanner } from "@/components/ads/KakaoMobileAd";
 import { createMetadata } from "@/lib/seo/metadata";
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo/jsonLd";
 
@@ -72,6 +73,8 @@ export default async function GuideDetailPage({ params }: PageProps) {
             <p className="text-sm font-extrabold text-brand-700">핵심 요약</p>
             <p className="mt-3 text-xl font-extrabold leading-9 text-slate-950">{intro}</p>
           </section>
+
+          <KakaoResponsiveBanner />
 
           {keyPoints.length ? (
             <section className="grid gap-4 md:grid-cols-2">

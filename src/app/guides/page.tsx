@@ -2,6 +2,7 @@ import Link from "next/link";
 import { guides } from "@/data/guides";
 import { createMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { KakaoInlineBanner } from "@/components/ads/KakaoMobileAd";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata = createMetadata({
@@ -36,6 +37,7 @@ export default function GuidesPage() {
       <div className="mt-8 max-w-4xl space-y-4 text-sm leading-7 text-slate-600 md:text-base md:leading-8">
         {intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </div>
+      <KakaoInlineBanner />
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {guides.map((guide) => (
           <Link key={guide.slug} href={`/guides/${guide.slug}/`} className="flex min-h-56 flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-brand-200 hover:bg-brand-50">

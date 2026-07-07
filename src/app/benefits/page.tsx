@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { benefits } from "@/data/benefits";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { KakaoInlineBanner } from "@/components/ads/KakaoMobileAd";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonLd";
 import { createMetadata } from "@/lib/seo/metadata";
 import { categoryLabels } from "@/types/benefit";
@@ -37,6 +38,7 @@ export default function BenefitsPage() {
       <div className="mt-8 max-w-4xl space-y-4 text-sm leading-7 text-slate-600 md:text-base md:leading-8">
         {intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </div>
+      <KakaoInlineBanner />
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {benefits.map((benefit) => (
           <Link key={benefit.id} href={`/benefits/${benefit.slug}/`} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:border-brand-200 hover:bg-brand-50">
