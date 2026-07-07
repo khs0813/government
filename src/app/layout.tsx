@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { KakaoMobileAd } from "@/components/ads/KakaoMobileAd";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonLd";
@@ -57,6 +58,11 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false
   },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg"
+  },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
     other: {
@@ -68,10 +74,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className="text-slate-900 antialiased">
+      <body className="pb-[calc(116px+env(safe-area-inset-bottom))] text-slate-900 antialiased md:pb-0">
         <JsonLd data={websiteJsonLd()} />
         <JsonLd data={organizationJsonLd()} />
         <Header />
+        <KakaoMobileAd />
         <main>{children}</main>
         <Footer />
       </body>

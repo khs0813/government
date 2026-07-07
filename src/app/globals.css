@@ -32,3 +32,9 @@ a {
   background: #dbeafe;
   color: #0f172a;
 }
+
+@media (max-width: 767px) and (max-height: 700px) {
+  .kakao-mobile-bottom-ad {
+    position: sticky;
+  }
+}
