@@ -67,7 +67,7 @@ export function KakaoMobileAd() {
   return (
     <>
       {isMobile ? (
-        <div className="flex min-h-[504px] justify-center border-b border-slate-200 bg-white px-0 py-3 sm:px-4">
+        <div className="flex justify-center border-b border-slate-200 bg-white px-0 py-3 sm:px-4">
           <AdSlot
             unit="DAN-wy5NpXgkCdYkArgq"
             width={320}
@@ -76,8 +76,8 @@ export function KakaoMobileAd() {
           />
         </div>
       ) : null}
-      <div className="flex flex-col items-center justify-center gap-3 border-b border-slate-200 bg-white px-2 py-3 sm:flex-row sm:items-start sm:px-4">
-        <div className="flex min-h-[250px] w-full justify-center sm:w-[300px]">
+      <div className="kakao-inline-common-ad flex flex-col items-center justify-center gap-3 border-b border-slate-200 bg-white px-2 py-3 lg:flex-row lg:items-start lg:px-4">
+        <div className="flex w-full justify-center sm:w-[300px]">
           <AdSlot
             unit="DAN-grTQq9iyOa6IH5tQ"
             width={300}
@@ -85,7 +85,7 @@ export function KakaoMobileAd() {
             shouldLoadKakao={shouldLoadKakao}
           />
         </div>
-        <div className="flex min-h-[250px] w-full justify-center sm:w-[250px]">
+        <div className="flex w-full justify-center sm:w-[250px]">
           <AdSlot
             unit="DAN-Yp1QMhDapxEbcNRp"
             width={250}
@@ -94,6 +94,20 @@ export function KakaoMobileAd() {
           />
         </div>
       </div>
+      <aside className="kakao-desktop-side-ad fixed top-28 z-20 w-[300px] flex-col items-center gap-4">
+        <AdSlot
+          unit="DAN-grTQq9iyOa6IH5tQ"
+          width={300}
+          height={250}
+          shouldLoadKakao={shouldLoadKakao}
+        />
+        <AdSlot
+          unit="DAN-Yp1QMhDapxEbcNRp"
+          width={250}
+          height={250}
+          shouldLoadKakao={shouldLoadKakao}
+        />
+      </aside>
       {isMobile ? (
         <div className="kakao-mobile-bottom-ad fixed inset-x-0 bottom-0 z-50 flex min-h-[116px] justify-center border-t border-slate-200 bg-white/95 px-0 py-2 shadow-[0_-8px_24px_rgba(15,23,42,0.12)] backdrop-blur sm:px-4 [padding-bottom:calc(0.5rem+env(safe-area-inset-bottom))]">
           <AdSlot
