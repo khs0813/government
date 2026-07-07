@@ -12,9 +12,14 @@ type AdSlotProps = {
 
 const KAKAO_ADFIT_SCRIPT_SRC = "https://t1.kakaocdn.net/kas/static/ba.min.js";
 let kakaoAdfitRenderTimer: number | null = null;
+let lastKakaoAdfitRenderKey: string | null = null;
 
-function requestKakaoAdFitRender() {
+function requestKakaoAdFitRender(renderKey: string) {
   if (typeof window === "undefined") {
+    return;
+  }
+
+  if (lastKakaoAdfitRenderKey === renderKey) {
     return;
   }
 
@@ -24,6 +29,7 @@ function requestKakaoAdFitRender() {
 
   kakaoAdfitRenderTimer = window.setTimeout(() => {
     kakaoAdfitRenderTimer = null;
+    lastKakaoAdfitRenderKey = renderKey;
 
     const script = document.createElement("script");
     script.async = true;
@@ -48,12 +54,6 @@ function isLocalHost(hostname: string) {
 }
 
 function AdSlot({ unit, width, height, shouldLoadKakao }: AdSlotProps) {
-  useEffect(() => {
-    if (shouldLoadKakao) {
-      requestKakaoAdFitRender();
-    }
-  }, [height, shouldLoadKakao, unit, width]);
-
   if (!shouldLoadKakao) {
     return (
       <div
@@ -74,6 +74,18 @@ function AdSlot({ unit, width, height, shouldLoadKakao }: AdSlotProps) {
       data-ad-height={String(height)}
     />
   );
+}
+
+function AdFitRenderRequest({ shouldLoadKakao }: { shouldLoadKakao: boolean }) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (shouldLoadKakao) {
+      requestKakaoAdFitRender(pathname);
+    }
+  }, [pathname, shouldLoadKakao]);
+
+  return null;
 }
 
 export function KakaoMobileAd() {
@@ -112,6 +124,7 @@ export function KakaoMobileAd() {
           />
         </div>
       ) : null}
+      <AdFitRenderRequest shouldLoadKakao={isMobile && shouldLoadKakao} />
     </>
   );
 }
@@ -137,7 +150,7 @@ export function KakaoMobileIntroBanners() {
 
   return (
     <>
-      <div className="mb-8 border-b border-slate-200 pb-8">
+      <div className="mb-8">
         {isMobile ? (
           <div className="flex justify-center">
             <AdSlot
@@ -148,7 +161,7 @@ export function KakaoMobileIntroBanners() {
             />
           </div>
         ) : (
-          <div className="flex items-start justify-center gap-4 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
+          <div className="flex items-start justify-center gap-4">
             <AdSlot
               unit="DAN-grTQq9iyOa6IH5tQ"
               width={300}
@@ -164,6 +177,7 @@ export function KakaoMobileIntroBanners() {
           </div>
         )}
       </div>
+      <AdFitRenderRequest shouldLoadKakao={shouldLoadKakao} />
     </>
   );
 }
@@ -189,7 +203,7 @@ export function KakaoMobileRectangleBanner() {
 
   return (
     <>
-      <div className="my-8 flex justify-center border-y border-slate-200 bg-white py-4">
+      <div className="my-8 flex justify-center">
         <AdSlot
           unit="DAN-wy5NpXgkCdYkArgq"
           width={320}
@@ -197,6 +211,7 @@ export function KakaoMobileRectangleBanner() {
           shouldLoadKakao={shouldLoadKakao}
         />
       </div>
+      <AdFitRenderRequest shouldLoadKakao={shouldLoadKakao} />
     </>
   );
 }
@@ -214,7 +229,7 @@ export function KakaoInlineBanner() {
 
   return (
     <>
-      <div className="my-8 flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-2 py-4 shadow-sm lg:flex-row lg:items-start lg:px-4">
+      <div className="my-8 flex flex-col items-center justify-center gap-3 lg:flex-row lg:items-start">
         <div className="flex w-full justify-center sm:w-[300px]">
           <AdSlot
             unit="DAN-grTQq9iyOa6IH5tQ"
@@ -232,6 +247,7 @@ export function KakaoInlineBanner() {
           />
         </div>
       </div>
+      <AdFitRenderRequest shouldLoadKakao={shouldLoadKakao} />
     </>
   );
 }
@@ -257,7 +273,7 @@ export function KakaoResponsiveBanner() {
 
   return (
     <>
-      <div className="my-8 flex justify-center rounded-2xl border border-slate-200 bg-white px-0 py-4 shadow-sm sm:px-4">
+      <div className="my-8 flex justify-center">
         {isMobile ? (
           <AdSlot
             unit="DAN-wy5NpXgkCdYkArgq"
@@ -282,6 +298,7 @@ export function KakaoResponsiveBanner() {
           </div>
         )}
       </div>
+      <AdFitRenderRequest shouldLoadKakao={shouldLoadKakao} />
     </>
   );
 }
