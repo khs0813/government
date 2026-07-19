@@ -1,4 +1,5 @@
 const canonicalSiteUrl = "https://jiwoncalc.co.kr";
+const extensionlessFilePaths = new Set(["/opengraph-image"]);
 
 export const siteConfig = {
   name: "지원금 계산기",
@@ -8,9 +9,19 @@ export const siteConfig = {
   ogImage: "/opengraph-image"
 };
 
+export function canonicalPath(path = "/") {
+  const pathWithoutQuery = path.split(/[?#]/)[0] || "/";
+  const normalizedPath = pathWithoutQuery.startsWith("/") ? pathWithoutQuery : `/${pathWithoutQuery}`;
+  const compactPath = normalizedPath.replace(/\/{2,}/g, "/");
+
+  if (compactPath === "/") return "/";
+  if (extensionlessFilePaths.has(compactPath)) return compactPath;
+  if (/\/[^/]+\.[^/]+$/.test(compactPath)) return compactPath;
+
+  return `${compactPath.replace(/\/+$/, "")}/`;
+}
+
 export function absoluteUrl(path = "/") {
   const base = siteConfig.url.replace(/\/$/, "");
-  if (path === "" || path === "/") return `${base}/`;
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return `${base}${normalizedPath}`;
+  return `${base}${canonicalPath(path)}`;
 }

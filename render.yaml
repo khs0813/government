@@ -6,6 +6,7 @@ services:
     staticPublishPath: ./out
     domains:
       - jiwoncalc.co.kr
+    renderSubdomainPolicy: disabled
     headers:
       - path: /*
         name: Strict-Transport-Security
@@ -31,3 +32,46 @@ services:
       - path: /opengraph-image
         name: Cache-Control
         value: public, max-age=86400
+      - path: /robots.txt
+        name: Content-Type
+        value: text/plain; charset=utf-8
+      - path: /sitemap.xml
+        name: Content-Type
+        value: application/xml; charset=utf-8
+    routes:
+      - type: redirect
+        source: /calculators
+        destination: /calculators/
+      - type: redirect
+        source: /calculators/:slug
+        destination: /calculators/:slug/
+      - type: redirect
+        source: /benefits
+        destination: /benefits/
+      - type: redirect
+        source: /benefits/:slug
+        destination: /benefits/:slug/
+      - type: redirect
+        source: /guides
+        destination: /guides/
+      - type: redirect
+        source: /guides/:slug
+        destination: /guides/:slug/
+      - type: redirect
+        source: /about
+        destination: /about/
+      - type: redirect
+        source: /methodology
+        destination: /methodology/
+      - type: redirect
+        source: /editorial-policy
+        destination: /editorial-policy/
+      - type: redirect
+        source: /privacy
+        destination: /privacy/
+      - type: redirect
+        source: /disclaimer
+        destination: /disclaimer/
+      - type: redirect
+        source: /contact
+        destination: /contact/
